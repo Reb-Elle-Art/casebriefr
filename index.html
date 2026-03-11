@@ -67,6 +67,24 @@
             transform: translateY(-2px);
             box-shadow: 0 4px 20px rgba(0,0,0,0.2);
         }
+
+        .button-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .cta-button.secondary:hover {
+            background: rgba(255,255,255,0.1);
+        }
         
         .features {
             margin-top: 60px;
@@ -103,6 +121,10 @@
             .features {
                 grid-template-columns: 1fr;
             }
+            .button-group {
+                flex-direction: column;
+                align-items: center;
+            }
         }
     </style>
 </head>
@@ -115,8 +137,11 @@
             Create structured, comprehensive case briefs with ease. <br>
             Designed for law students and legal professionals who demand clarity and precision.
         </p>
-        
-        <a href="template.html" class="cta-button">Create a Case Brief</a>
+
+        <div class="button-group">
+            <a href="template.html" class="cta-button">Create a Case Brief</a>
+            <a href="https://d-briefs.com" class="cta-button secondary">View Gallery</a>
+        </div>
         
         <div class="features">
             <div class="feature">
