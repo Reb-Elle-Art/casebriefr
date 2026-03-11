@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casebriefr — Legal Case Briefing Tool</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .landing-container {
+            max-width: 600px;
+            text-align: center;
+            color: white;
+        }
+        
+        .brand-name {
+            font-size: 56px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .brand-tagline {
+            font-size: 20px;
+            font-weight: 300;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+        
+        .description {
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 40px;
+            opacity: 0.95;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 16px 40px;
+            background: white;
+            color: #2c3e50;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+        
+        .features {
+            margin-top: 60px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            text-align: left;
+        }
+        
+        .feature {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .feature h3 {
+            font-size: 14px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .feature p {
+            font-size: 13px;
+            opacity: 0.85;
+            line-height: 1.5;
+        }
+        
+        @media (max-width: 600px) {
+            .brand-name {
+                font-size: 40px;
+            }
+            .features {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="landing-container">
+        <h1 class="brand-name">Casebriefr</h1>
+        <p class="brand-tagline">Professional Legal Case Briefing Tool</p>
+        
+        <p class="description">
+            Create structured, comprehensive case briefs with ease. <br>
+            Designed for law students and legal professionals who demand clarity and precision.
+        </p>
+        
+        <a href="index.html" class="cta-button">Create a Case Brief</a>
+        
+        <div class="features">
+            <div class="feature">
+                <h3>Structured</h3>
+                <p>All essential sections: Facts, Issues, Holding, Rule, Reasoning, and more.</p>
+            </div>
+            <div class="feature">
+                <h3>Print Ready</h3>
+                <p>Clean, professional formatting optimized for printing or PDF export.</p>
+            </div>
+            <div class="feature">
+                <h3>Simple</h3>
+                <p>Fill in your browser, print when done. No accounts, no downloads.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
