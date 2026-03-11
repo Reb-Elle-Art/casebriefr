@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casebriefr Demo — Marbury v. Madison</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .demo-banner {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 12px 20px;
+            margin: -40px -40px 30px -40px;
+            text-align: center;
+            font-size: 13px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        .demo-banner a {
+            color: #fff;
+            text-decoration: underline;
+            margin-left: 10px;
+        }
+        
+        .brand-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #2c3e50;
+        }
+        
+        .brand-name {
+            font-size: 28px;
+            font-weight: 700;
+            color: #2c3e50;
+            letter-spacing: 1px;
+        }
+        
+        .brand-tagline {
+            color: #666;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+            font-size: 26px;
+        }
+        
+        .case-meta {
+            text-align: center;
+            color: #666;
+            font-size: 13px;
+            margin-bottom: 30px;
+        }
+        
+        .form-section {
+            margin-bottom: 22px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .section-header {
+            background: #2c3e50;
+            color: white;
+            padding: 10px 15px;
+            font-weight: 600;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .section-content {
+            padding: 15px 18px;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+        
+        .section-content p {
+            margin-bottom: 10px;
+        }
+        
+        .section-content ul,
+        .section-content ol {
+            margin-left: 22px;
+            margin-bottom: 10px;
+        }
+        
+        .section-content li {
+            margin-bottom: 6px;
+        }
+        
+        .highlight-box {
+            background: #f8f9fa;
+            border-left: 4px solid #2c3e50;
+            padding: 15px 18px;
+            margin: 12px 0;
+        }
+        
+        .analysis-section {
+            margin: 15px 0;
+            padding-left: 15px;
+            border-left: 3px solid #ddd;
+        }
+        
+        .analysis-section h3 {
+            font-size: 14px;
+            color: #444;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .dissent {
+            color: #666;
+            font-style: italic;
+        }
+        
+        .print-btn {
+            display: block;
+            width: 200px;
+            margin: 30px auto 0;
+            padding: 12px 24px;
+            background: #2c3e50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .print-btn:hover {
+            background: #1a252f;
+        }
+        
+        .brand-footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            color: #888;
+            font-size: 12px;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                padding: 20px;
+                max-width: 100%;
+            }
+            .demo-banner,
+            .print-btn,
+            .brand-footer {
+                display: none;
+            }
+            .brand-header {
+                border-bottom: 2px solid #2c3e50;
+            }
+            .form-section {
+                break-inside: avoid;
+                page-break-inside: avoid;
+                margin-bottom: 15px;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            .demo-banner {
+                margin: -20px -20px 20px -20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="demo-banner">
+            Demo — Sample Case Brief <a href="template.html">Create your own →</a>
+        </div>
+        
+        <div class="brand-header">
+            <div class="brand-name">Casebriefr</div>
+            <div class="brand-tagline">Professional Legal Case Briefing Tool</div>
+        </div>
+        
+        <h1>Marbury v. Madison</h1>
+        <div class="case-meta">5 U.S. (1 Cranch) 137 | Supreme Court of the United States | February 24, 1803</div>
+        
+        <!-- Facts -->
+        <div class="form-section">
+            <div class="section-header">Relevant Facts</div>
+            <div class="section-content">
+                <ul>
+                    <li>Adams (Federalist) loses presidency to Jefferson (Republican-Democrat) in the 1800 election</li>
+                    <li>Before leaving office, Adams appoints 42 justices of the peace for D.C., including William Marbury</li>
+                    <li>Marbury's commission is signed by the President and sealed by the Secretary of State (Marshall himself), but not delivered before Jefferson's inauguration</li>
+                    <li>Jefferson's administration, through Secretary of State James Madison, refuses to deliver Marbury's commission</li>
+                    <li>Marbury seeks a writ of mandamus directly from the Supreme Court to compel delivery</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Procedural History -->
+        <div class="form-section">
+            <div class="section-header">Procedural Posture</div>
+            <div class="section-content">
+                <ul>
+                    <li>Marbury petitions the Supreme Court directly for a writ of mandamus under §13 of the Judiciary Act of 1789</li>
+                    <li>The case arises under the Court's original jurisdiction (not appellate)</li>
+                    <li>Supreme Court hears the case and issues its opinion</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Issues -->
+        <div class="form-section">
+            <div class="section-header">Legal Question(s) Presented</div>
+            <div class="section-content">
+                <ol>
+                    <li>Has Marbury a right to the commission he demands?</li>
+                    <li>If he has a right, and that right has been violated, do the laws of the country afford him a remedy?</li>
+                    <li>If they do afford him a remedy, is it a mandamus issuing from the Supreme Court?</li>
+                    <li>Does §13 of the Judiciary Act of 1789, which grants the Supreme Court original jurisdiction to issue writs of mandamus, violate Article III of the Constitution?</li>
+                </ol>
+            </div>
+        </div>
+        
+        <!-- Holding -->
+        <div class="form-section">
+            <div class="section-header">Court's Decision</div>
+            <div class="section-content">
+                <div class="highlight-box">
+                    The Court held that while Marbury had a vested legal right to the commission and the laws did afford him a remedy, the Supreme Court could not issue the writ because §13 of the Judiciary Act unconstitutionally expanded the Court's original jurisdiction beyond what Article III permits.
+                </div>
+            </div>
+        </div>
+        
+        <!-- Rule -->
+        <div class="form-section">
+            <div class="section-header">Legal Principle(s)</div>
+            <div class="section-content">
+                <ol>
+                    <li><strong>Judicial Review:</strong> It is emphatically the province and duty of the judicial department to say what the law is.</li>
+                    <li>The Constitution is the "superior, paramount law" and ordinary statutes that conflict with it are void.</li>
+                    <li>Article III fixes the Supreme Court's original jurisdiction; Congress cannot enlarge it by statute.</li>
+                    <li>Congress may regulate only the Supreme Court's appellate jurisdiction, not its original jurisdiction.</li>
+                </ol>
+            </div>
+        </div>
+        
+        <!-- Reasoning -->
+        <div class="form-section">
+            <div class="section-header">Court's Analysis</div>
+            <div class="section-content">
+                <p>Marshall structured the opinion in three parts:</p>
+                
+                <div class="analysis-section">
+                    <h3>1. Right to the Commission</h3>
+                    <ul>
+                        <li>The appointment was complete when the commission was signed and sealed</li>
+                        <li>Delivery was merely a ministerial act, not a discretionary one</li>
+                        <li>Therefore, Marbury had a vested legal right</li>
+                    </ul>
+                </div>
+                
+                <div class="analysis-section">
+                    <h3>2. Remedy Exists</h3>
+                    <ul>
+                        <li>Where there's a legal right, there's a legal remedy</li>
+                        <li>The violation of a vested legal right is a wrong that courts can redress</li>
+                    </ul>
+                </div>
+                
+                <div class="analysis-section">
+                    <h3>3. The Supreme Court Cannot Provide This Remedy</h3>
+                    <ul>
+                        <li>Article III §2 defines original jurisdiction narrowly: cases affecting ambassadors, other public ministers, and those in which a state is a party</li>
+                        <li>§13 of the Judiciary Act attempts to grant original jurisdiction for writs of mandamus</li>
+                        <li>This conflicts with Article III and is therefore unconstitutional</li>
+                        <li>The Court cannot enforce an unconstitutional statute, even to provide justice in a particular case</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Concurring -->
+        <div class="form-section">
+            <div class="section-header">Concurring Opinion(s)</div>
+            <div class="section-content">
+                <p class="dissent">None</p>
+            </div>
+        </div>
+        
+        <!-- Dissenting -->
+        <div class="form-section">
+            <div class="section-header">Dissenting Opinion(s)</div>
+            <div class="section-content">
+                <p class="dissent">None</p>
+            </div>
+        </div>
+        
+        <!-- Significance -->
+        <div class="form-section">
+            <div class="section-header">Importance & Impact</div>
+            <div class="section-content">
+                <ul>
+                    <li>Established the doctrine of judicial review — the Supreme Court's authority to declare acts of Congress unconstitutional</li>
+                    <li>Transformed the judiciary into a co-equal branch of government</li>
+                    <li>Created the framework for constitutional interpretation that persists today</li>
+                    <li>One of the most cited and foundational decisions in American law</li>
+                    <li>Marshall's political genius: chastised Jefferson's administration while avoiding a direct confrontation the Court would lose</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Additional Notes -->
+        <div class="form-section">
+            <div class="section-header">Additional Notes</div>
+            <div class="section-content">
+                <ul>
+                    <li><strong>Political Context:</strong> Marshall was Adams's Secretary of State who had sealed the commissions. The decision allowed him to criticize Jefferson without issuing an order Jefferson would ignore.</li>
+                    <li><strong>Irony:</strong> Marbury never got his commission, but the case established the Court's power.</li>
+                    <li><strong>Marshall's Strategy:</strong> Found the plaintiffs were right on the merits but wrong on jurisdiction — a way to have his cake and eat it too.</li>
+                    <li>Still taught as the first case in virtually every constitutional law course in the United States.</li>
+                </ul>
+            </div>
+        </div>
+        
+        <button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
+        
+        <div class="brand-footer">
+            Created with Casebriefr — casebriefr.com
+        </div>
+    </div>
+</body>
+</html>
