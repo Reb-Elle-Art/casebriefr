@@ -279,27 +279,27 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label for="case-name">Case Name</label>
-                        <input type="text" id="case-name" name="case_name" placeholder="e.g., Marbury v. Madison">
+                        <input type="text" id="case-name" name="case_name" value="Marbury v. Madison" placeholder="e.g., Marbury v. Madison">
                     </div>
                     <div class="form-group">
                         <label for="citation">Citation</label>
-                        <input type="text" id="citation" name="citation" placeholder="e.g., 5 U.S. (1 Cranch) 137 (1803)">
+                        <input type="text" id="citation" name="citation" value="5 U.S. (1 Cranch) 137 (1803)" placeholder="e.g., 5 U.S. (1 Cranch) 137 (1803)">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group">
                         <label for="court">Court</label>
-                        <input type="text" id="court" name="court" placeholder="e.g., U.S. Supreme Court">
+                        <input type="text" id="court" name="court" value="U.S. Supreme Court" placeholder="e.g., U.S. Supreme Court">
                     </div>
                     <div class="form-group">
                         <label for="date">Date Decided</label>
-                        <input type="date" id="date" name="date_decided">
+                        <input type="date" id="date" name="date_decided" value="1803-02-24">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group">
                         <label for="judge">Judge / Author</label>
-                        <input type="text" id="judge" name="judge" placeholder="e.g., Chief Justice Marshall">
+                        <input type="text" id="judge" name="judge" value="Chief Justice John Marshall" placeholder="e.g., Chief Justice Marshall">
                     </div>
                     <div class="form-group">
                         <label for="briefed-by">Briefed By</label>
@@ -315,7 +315,7 @@
             <div class="section-content">
                 <div class="form-group full-width">
                     <label for="facts">Relevant Facts</label>
-                    <textarea id="facts" name="facts" class="large" placeholder="Summarize the key facts of the case. Who are the parties? What happened? What is the dispute about? Include only legally relevant facts."></textarea>
+                    <textarea id="facts" name="facts" class="large" placeholder="Summarize the key facts of the case. Who are the parties? What happened? What is the dispute about? Include only legally relevant facts.">William Marbury was appointed as a justice of the peace for the District of Columbia by President John Adams in the final days of his presidency. The appointment was confirmed by the Senate and the commission was signed and sealed, but not delivered before Adams left office. President Jefferson, the incoming president, instructed his Secretary of State, James Madison, not to deliver the commission. Marbury petitioned the Supreme Court for a writ of mandamus to compel Madison to deliver the commission.</textarea>
                     <p class="hint">Focus on facts material to the court's decision</p>
                 </div>
             </div>
@@ -327,7 +327,7 @@
             <div class="section-content">
                 <div class="form-group full-width">
                     <label for="procedural-history">Procedural Posture</label>
-                    <textarea id="procedural-history" name="procedural_history" class="large" placeholder="How did this case reach this court? What happened in lower courts? What is the current procedural posture (e.g., appeal from dismissal, summary judgment, etc.)?"></textarea>
+                    <textarea id="procedural-history" name="procedural_history" class="large" placeholder="How did this case reach this court? What happened in lower courts? What is the current procedural posture (e.g., appeal from dismissal, summary judgment, etc.)?">Marbury brought his action directly to the U.S. Supreme Court under Section 13 of the Judiciary Act of 1789, which granted the Supreme Court original jurisdiction to issue writs of mandamus to federal officers. This was not an appeal from a lower court but rather an original action filed directly with the Supreme Court.</textarea>
                     <p class="hint">Trace the case's path through the judicial system</p>
                 </div>
             </div>
@@ -339,7 +339,10 @@
             <div class="section-content">
                 <div class="form-group full-width">
                     <label for="issues">Legal Question(s) Presented</label>
-                    <textarea id="issues" name="issues" class="large" placeholder="State the legal question(s) the court must answer. Frame as questions that can be answered with yes/no or specific legal rules. Example: 'Does the First Amendment protect flag burning as symbolic speech?'"></textarea>
+                    <textarea id="issues" name="issues" class="large" placeholder="State the legal question(s) the court must answer. Frame as questions that can be answered with yes/no or specific legal rules. Example: 'Does the First Amendment protect flag burning as symbolic speech?'">1. Does Marbury have a right to the commission?
+2. If he has a right, is there a legal remedy available?
+3. Is a writ of mandamus the appropriate remedy?
+4. Does the Supreme Court have the constitutional authority to issue the writ under Section 13 of the Judiciary Act of 1789?</textarea>
                     <p class="hint">Write in question format. Include all sub-issues if applicable.</p>
                 </div>
             </div>
@@ -351,7 +354,7 @@
             <div class="section-content">
                 <div class="form-group full-width">
                     <label for="holding">Court's Decision</label>
-                    <textarea id="holding" name="holding" placeholder="How did the court answer the legal question(s)? What was the outcome? (e.g., 'The Court held that...' or 'Reversed and remanded...')"></textarea>
+                    <textarea id="holding" name="holding" placeholder="How did the court answer the legal question(s)? What was the outcome? (e.g., 'The Court held that...' or 'Reversed and remanded...')">The Court held that: (1) Marbury had a legal right to the commission because it was a completed act once signed and sealed; (2) the law must provide a remedy for violation of a vested legal right; (3) mandamus was the appropriate remedy; but (4) Section 13 of the Judiciary Act of 1789 was unconstitutional because it attempted to expand the Supreme Court's original jurisdiction beyond what Article III of the Constitution allows. The petition for mandamus was denied.</textarea>
                 </div>
             </div>
         </div>
@@ -362,7 +365,7 @@
             <div class="section-content">
                 <div class="form-group full-width">
                     <label for="rule">Legal Principle(s)</label>
-                    <textarea id="rule" name="rule" class="large" placeholder="What legal rule(s), test(s), or standard(s) did the court apply or establish? State the rule clearly and precisely as articulated by the court."></textarea>
+                    <textarea id="rule" name="rule" class="large" placeholder="What legal rule(s), test(s), or standard(s) did the court apply or establish? State the rule clearly and precisely as articulated by the court.">It is emphatically the province and duty of the judicial department to say what the law is. The Constitution is superior to ordinary legislative acts, and when a law is in conflict with the Constitution, the Constitution must govern. The Supreme Court has the authority of judicial review - the power to declare acts of Congress unconstitutional when they conflict with the Constitution. Congress cannot expand the Supreme Court's original jurisdiction beyond the limits set forth in Article III, Section 2.</textarea>
                     <p class="hint">This is the binding precedent established by this case</p>
                 </div>
             </div>
@@ -374,7 +377,7 @@
             <div class="section-content">
                 <div class="form-group full-width">
                     <label for="reasoning">Court's Analysis</label>
-                    <textarea id="reasoning" name="reasoning" class="large" placeholder="Explain the court's reasoning. How did the court reach its conclusion? What arguments did it consider? What precedents did it rely on or distinguish? What policy considerations influenced the decision?"></textarea>
+                    <textarea id="reasoning" name="reasoning" class="large" placeholder="Explain the court's reasoning. How did the court reach its conclusion? What arguments did it consider? What precedents did it rely on or distinguish? What policy considerations influenced the decision?">Marshall established three principles: First, Marbury had a vested legal right to the commission because the appointment process was complete when the President signed and sealed it. Second, for every violation of a vested right, there must be a legal remedy - "the very essence of civil liberty certainly consists in the right of every individual to claim the protection of the laws." Third, the Court examined whether mandamus was the appropriate remedy and found it was. However, the crucial question was whether the Court had jurisdiction to issue it. Marshall reasoned that Article III of the Constitution defines the Supreme Court's original and appellate jurisdiction, and Congress cannot expand it. Section 13 purported to give the Court original jurisdiction to issue mandamus, but this conflicted with Article III. Therefore, the statute was unconstitutional.</textarea>
                     <p class="hint">This is often the longest section - explain the court's logic step by step</p>
                 </div>
             </div>
@@ -401,7 +404,7 @@
             <div class="section-content">
                 <div class="form-group full-width">
                     <label for="significance">Importance &amp; Impact</label>
-                    <textarea id="significance" name="significance" class="large" placeholder="Why does this case matter? What is its significance in the broader legal landscape? How has it been applied in subsequent cases? What are the policy implications?"></textarea>
+                    <textarea id="significance" name="significance" class="large" placeholder="Why does this case matter? What is its significance in the broader legal landscape? How has it been applied in subsequent cases? What are the policy implications?">Marbury v. Madison established the principle of judicial review in the United States - the power of federal courts to declare acts of Congress unconstitutional. This is arguably the most important decision in American constitutional law, as it positioned the judiciary as a co-equal branch of government with the power to check legislative and executive actions. The case has been cited and reaffirmed countless times, including in Cooper v. Aaron (1958) where the Court stated that Marbury established "the basic principle that the federal judiciary is supreme in the exposition of the law of the Constitution."</textarea>
                 </div>
                 <div class="form-group full-width" style="margin-top: 15px;">
                     <label for="notes">Additional Notes</label>
