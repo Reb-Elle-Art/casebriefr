@@ -10,17 +10,17 @@
 
 **Purpose:** Generate a formatted case brief using the Casebriefr template, save as HTML to `Briefs/` directory.
 
-**Full Process:** See `Projects/the-docket/_BRIEF.md` for detailed workflow
+**Full Process:** See `p-the-docket/_BRIEF.md` for detailed workflow
 
 **Quick Reference:**
 1. Research case using web_search/web_fetch
-2. Read template from `Projects/casebriefr/template.html`
+2. Read template from `p-casebriefr/template.html`
 3. Fill in all sections with researched content
 4. Save to `Briefs/YYYY-MM-DD_Case-Name.html`
 5. Update `Briefs/README.md` index
 6. Deliver to Elle with usage instructions
 
-**Template Source:** `Projects/casebriefr/template.html`
+**Template Source:** `p-casebriefr/template.html`
 **Output Directory:** `/root/.openclaw/workspace/Briefs/`
 
 ---
@@ -34,7 +34,7 @@
 - Accessibility improvements
 
 **Process:**
-1. Edit `Projects/casebriefr/template.html`
+1. Edit `p-casebriefr/template.html`
 2. Test locally (open in browser, verify print view)
 3. Commit and push to GitHub
 4. Verify live at https://casebriefr.com/template.html
@@ -53,7 +53,7 @@
 **Live URL:** https://casebriefr.com
 
 **Deploy process:**
-1. Make edits to files in `/root/.openclaw/workspace/Projects/casebriefr/`
+1. Make edits to files in `/root/.openclaw/workspace/p-casebriefr/`
 2. Commit changes: `git add . && git commit -m "description"`
 3. Push to GitHub: `git push origin main`
 4. Changes go live within 1-2 minutes
@@ -79,7 +79,7 @@
 
 **Important:** Keep proxy status as "DNS Only" (gray cloud) — GitHub Pages requires this
 
-**Documentation:** `Projects/casebriefr/DOMAIN.md`
+**Documentation:** `p-casebriefr/DOMAIN.md`
 
 ---
 
@@ -135,7 +135,7 @@
 - Ensure no JavaScript errors in console
 
 **Brief generation failing:**
-- Verify `Projects/casebriefr/template.html` exists and is readable
+- Verify `p-casebriefr/template.html` exists and is readable
 - Check Briefs/ directory exists
 - Ensure sufficient disk space
 
