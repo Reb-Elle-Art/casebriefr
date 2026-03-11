@@ -139,23 +139,41 @@
             margin-top: 4px;
         }
         
-        .print-btn {
-            display: block;
-            width: 200px;
-            margin: 30px auto 0;
+        .button-row {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .print-btn,
+        .download-btn {
             padding: 12px 24px;
-            background: #2c3e50;
-            color: white;
             border: none;
             border-radius: 4px;
             font-size: 14px;
             cursor: pointer;
             text-transform: uppercase;
             letter-spacing: 1px;
+            transition: background 0.2s;
         }
-        
+
+        .print-btn {
+            background: #2c3e50;
+            color: white;
+        }
+
         .print-btn:hover {
             background: #1a252f;
+        }
+
+        .download-btn {
+            background: #3498db;
+            color: white;
+        }
+
+        .download-btn:hover {
+            background: #2980b9;
         }
         
         .brand-footer {
@@ -212,7 +230,7 @@
                 padding: 20px;
                 max-width: 100%;
             }
-            .print-btn, .brand-footer, .screen-only {
+            .button-row, .brand-footer, .screen-only {
                 display: none;
             }
             .print-header {
@@ -490,7 +508,10 @@
             </div>
         </div>
         
-        <button class="print-btn" onclick="preparePrint()">Print / Save as PDF</button>
+        <div class="button-row">
+            <button class="print-btn" onclick="preparePrint()">Print</button>
+            <button class="download-btn" onclick="downloadPDF()">Download PDF</button>
+        </div>
         
         <div class="brand-footer">
             Created with Casebriefr — casebriefr.com
@@ -500,7 +521,32 @@
         <div class="demo-watermark">Casebriefr Demo</div>
     </div>
     
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script>
+        function downloadPDF() {
+            updatePrintContent();
+            const caseName = document.getElementById('case-name').value || 'Case';
+            const filename = `Casebriefr - ${caseName}.pdf`;
+            
+            const element = document.querySelector('.container');
+            const opt = {
+                margin: [0.5, 0.5, 0.5, 0.5],
+                filename: filename,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+            
+            // Temporarily hide buttons for PDF generation
+            const buttons = document.querySelectorAll('.print-btn, .brand-footer');
+            buttons.forEach(btn => btn.style.display = 'none');
+            
+            html2pdf().set(opt).from(element).save().then(() => {
+                // Restore buttons
+                buttons.forEach(btn => btn.style.display = '');
+            });
+        }
+        
         function updatePrintContent() {
             // Copy textarea content to print divs
             const textareas = document.querySelectorAll('textarea');
