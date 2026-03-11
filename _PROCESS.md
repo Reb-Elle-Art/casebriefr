@@ -8,7 +8,7 @@
 
 **Trigger:** `BRIEF: [case citation or name]` (case-sensitive)
 
-**Purpose:** Generate a formatted case brief using the Casebriefr template, save as HTML to `Briefs/` directory.
+**Purpose:** Generate a formatted case brief using the Casebriefr template, save as HTML to `d-Briefs/` directory.
 
 **Full Process:** See `p-the-docket/_BRIEF.md` for detailed workflow
 
@@ -16,12 +16,12 @@
 1. Research case using web_search/web_fetch
 2. Read template from `p-casebriefr/template.html`
 3. Fill in all sections with researched content
-4. Save to `Briefs/YYYY-MM-DD_Case-Name.html`
-5. Update `Briefs/README.md` index
+4. Save to `d-Briefs/YYYY-MM-DD_Case-Name.html`
+5. Update `d-Briefs/README.md` index
 6. Deliver to Elle with usage instructions
 
 **Template Source:** `p-casebriefr/template.html`
-**Output Directory:** `/root/.openclaw/workspace/Briefs/`
+**Output Directory:** `/root/.openclaw/workspace/d-Briefs/`
 
 ---
 
@@ -85,7 +85,7 @@
 
 ## Briefs Directory Maintenance
 
-**Location:** `/root/.openclaw/workspace/Briefs/`
+**Location:** `/root/.openclaw/workspace/d-Briefs/`
 
 **Organization:**
 - `README.md` — Index of all briefs with dates and links
@@ -104,7 +104,7 @@
 **Monthly:**
 - [ ] Verify casebriefr.com loads correctly
 - [ ] Check GitHub Pages build status (Settings → Pages)
-- [ ] Review Briefs/ directory for duplicates
+- [ ] Review d-Briefs/ directory for duplicates
 
 **Annually (March 11):**
 - [ ] Verify domain auto-renewal processed
@@ -136,7 +136,7 @@
 
 **Brief generation failing:**
 - Verify `p-casebriefr/template.html` exists and is readable
-- Check Briefs/ directory exists
+- Check d-Briefs/ directory exists
 - Ensure sufficient disk space
 
 **Domain issues:**

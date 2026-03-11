@@ -15,7 +15,7 @@
 
 ## Location
 
-`/root/.openclaw/workspace/Projects/casebriefr/`
+`/root/.openclaw/workspace/p-casebriefr/`
 
 ---
 
