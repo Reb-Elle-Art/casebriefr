@@ -167,6 +167,35 @@
             font-size: 12px;
         }
         
+        .print-header {
+            display: none;
+        }
+        
+        .print-case-name {
+            font-size: 22px;
+            font-weight: 700;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 8px;
+            font-style: italic;
+        }
+        
+        .print-case-meta {
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .print-case-meta span:not(:empty)::after {
+            content: " | ";
+            color: #999;
+        }
+        
+        .print-case-meta span:last-child::after {
+            content: "";
+        }
+        
         @media print {
             body {
                 background: white;
@@ -177,7 +206,17 @@
                 padding: 20px;
                 max-width: 100%;
             }
-            .print-btn, .brand-footer {
+            .print-btn, .brand-footer, .screen-only {
+                display: none;
+            }
+            .print-header {
+                display: block;
+                margin-bottom: 20px;
+                padding-bottom: 15px;
+                border-bottom: 2px solid #2c3e50;
+            }
+            /* Hide Case Identification section in print */
+            .form-section:first-of-type {
                 display: none;
             }
             input, textarea {
@@ -220,8 +259,18 @@
             <div class="brand-tagline">Professional Legal Case Briefing Tool</div>
         </div>
         
-        <h1>Case Brief</h1>
-        <p class="subtitle">Use this template to analyze and summarize legal cases</p>
+        <!-- Print Header - Shows case info when printing -->
+        <div class="print-header">
+            <div class="print-case-name" id="print-case-name"></div>
+            <div class="print-case-meta">
+                <span id="print-citation"></span>
+                <span id="print-court"></span>
+                <span id="print-date"></span>
+            </div>
+        </div>
+        
+        <h1 class="screen-only">Case Brief</h1>
+        <p class="subtitle screen-only">Use this template to analyze and summarize legal cases</p>
         
         <!-- Case Identification -->
         <div class="form-section">
@@ -361,11 +410,35 @@
             </div>
         </div>
         
-        <button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
+        <button class="print-btn" onclick="preparePrint()">Print / Save as PDF</button>
         
         <div class="brand-footer">
             Created with Casebriefr — casebriefr.com
         </div>
     </div>
+    
+    <script>
+        function updatePrintHeader() {
+            // Get values from form fields
+            const caseName = document.getElementById('case-name').value;
+            const citation = document.getElementById('citation').value;
+            const court = document.getElementById('court').value;
+            const date = document.getElementById('date').value;
+            
+            // Update print header
+            document.getElementById('print-case-name').textContent = caseName || 'Case Name';
+            document.getElementById('print-citation').textContent = citation;
+            document.getElementById('print-court').textContent = court;
+            document.getElementById('print-date').textContent = date ? new Date(date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
+        }
+        
+        function preparePrint() {
+            updatePrintHeader();
+            window.print();
+        }
+        
+        // Also update before print event (for Ctrl+P)
+        window.addEventListener('beforeprint', updatePrintHeader);
+    </script>
 </body>
 </html>
