@@ -36,10 +36,24 @@ Domain DNS is managed via Cloudflare. The site is hosted on GitHub Pages with th
 - **Repository:** Reb-Elle-Art/casebriefr
 - **Branch:** main
 - **Custom Domain:** casebriefr.com
-- **HTTPS:** Enabled (GitHub provisions SSL certificate automatically)
-- **Live URLs:**
-  - https://casebriefr.com (landing page with features)
-  - https://casebriefr.com/template.html (case brief template)
+- **HTTPS:** Provisioning in progress (GitHub provisions SSL certificate automatically)
+- **HTTPS Enforcement:** Disabled until certificate is ready
+
+### Live URLs
+
+| URL | Status | Use Case |
+|-----|--------|----------|
+| http://casebriefr.com | ✅ Working | Temporary (HTTP only) |
+| https://casebriefr.com | ⏳ Pending SSL | Will work once certificate provisions |
+| **https://reb-elle-art.github.io/casebriefr/** | ✅ **Working now** | **Use this while SSL resolves** |
+
+### SSL Certificate Status
+
+**Current Status:** Certificate does not exist yet  
+**Expected Resolution:** Within 24 hours of domain configuration (domain added March 11, 2026 ~05:00 UTC)  
+**Action Required:** None — GitHub auto-provisions certificates for custom domains  
+
+Once certificate is ready, HTTPS enforcement will be enabled and http://casebriefr.com will redirect to https.
 
 ---
 
