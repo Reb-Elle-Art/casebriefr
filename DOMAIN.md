@@ -38,8 +38,8 @@ Domain DNS is managed via Cloudflare. The site is hosted on GitHub Pages with th
 - **Custom Domain:** casebriefr.com
 - **HTTPS:** Enabled (GitHub provisions SSL certificate automatically)
 - **Live URLs:**
-  - https://casebriefr.com (landing page)
-  - https://casebriefr.com/index.html (case brief template)
+  - https://casebriefr.com (landing page with features)
+  - https://casebriefr.com/template.html (case brief template)
 
 ---
 

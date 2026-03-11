@@ -26,9 +26,18 @@ Casebriefr is a clean, printable HTML template for creating structured legal cas
 - ✅ **Helpful Hints** — Guidance for each section to ensure comprehensive briefs
 - ✅ **Professional Design** — Clean, readable layout suitable for class or court
 
+## Live Site
+
+🌐 **https://casebriefr.com**
+
+### Site Structure
+
+- **Landing Page:** https://casebriefr.com (introduction & features)
+- **Case Brief Template:** https://casebriefr.com/template.html (create your brief)
+
 ## How to Use
 
-1. Open `index.html` in any web browser
+1. Go to https://casebriefr.com/template.html
 2. Fill in the case information in each section
 3. Click "Print / Save as PDF" when finished
 4. Save digitally or print for your records
