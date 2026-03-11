@@ -2,7 +2,7 @@
 
 **Professional Legal Case Briefing — Automated**
 
-> *"Casebriefs.com is a law school in a box. Casebriefr is a brief in your inbox. They have 16,000 cases. We have your case — whatever it is, whenever you need it, in 60 seconds."*
+> *"Casebriefr is a brief in your inbox. They have 16,000 cases. We have your case — whatever it is."*
 
 ---
 
