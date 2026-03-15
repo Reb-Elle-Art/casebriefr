@@ -527,7 +527,7 @@
             updatePrintContent();
             const caseName = document.getElementById('case-name').value || 'Case';
             const filename = `Casebriefr - ${caseName}.pdf`;
-            
+
             const element = document.querySelector('.container');
             const opt = {
                 margin: [0.5, 0.5, 0.5, 0.5],
@@ -536,14 +536,77 @@
                 html2canvas: { scale: 2, useCORS: true },
                 jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
             };
-            
-            // Temporarily hide buttons for PDF generation
-            const buttons = document.querySelectorAll('.print-btn, .brand-footer');
-            buttons.forEach(btn => btn.style.display = 'none');
-            
+
+            // Store original styles to restore later
+            const originalStyles = [];
+
+            // Hide buttons for PDF generation
+            const buttons = document.querySelectorAll('.print-btn, .brand-footer, .button-row');
+            buttons.forEach(btn => {
+                originalStyles.push({ element: btn, display: btn.style.display });
+                btn.style.display = 'none';
+            });
+
+            // Hide textareas and show print-content divs for PDF
+            const textareas = document.querySelectorAll('textarea');
+            textareas.forEach(textarea => {
+                originalStyles.push({ element: textarea, display: textarea.style.display });
+                textarea.style.display = 'none';
+            });
+
+            const printContents = document.querySelectorAll('.print-content');
+            printContents.forEach(div => {
+                originalStyles.push({ element: div, display: div.style.display });
+                div.style.display = 'block';
+                // Apply print-like styling for PDF generation
+                div.style.whiteSpace = 'pre-wrap';
+                div.style.wordWrap = 'break-word';
+                div.style.fontFamily = 'inherit';
+                div.style.fontSize = '14px';
+                div.style.lineHeight = '1.6';
+                div.style.border = '1px solid #999';
+                div.style.padding = '10px 12px';
+                div.style.minHeight = '60px';
+                div.style.background = 'white';
+                div.style.marginTop = '5px';
+            });
+
+            // Hide the first form section (Case Identification) in PDF
+            const caseIdSection = document.querySelector('.form-section:first-of-type');
+            if (caseIdSection) {
+                originalStyles.push({ element: caseIdSection, display: caseIdSection.style.display });
+                caseIdSection.style.display = 'none';
+            }
+
+            // Hide labels and hints in PDF
+            const labels = document.querySelectorAll('label, .hint');
+            labels.forEach(label => {
+                originalStyles.push({ element: label, display: label.style.display });
+                label.style.display = 'none';
+            });
+
+            // Hide brand header in PDF (print-header will show instead)
+            const brandHeader = document.querySelector('.brand-header');
+            if (brandHeader) {
+                originalStyles.push({ element: brandHeader, display: brandHeader.style.display });
+                brandHeader.style.display = 'none';
+            }
+
+            // Show print header
+            const printHeader = document.querySelector('.print-header');
+            if (printHeader) {
+                originalStyles.push({ element: printHeader, display: printHeader.style.display });
+                printHeader.style.display = 'block';
+                printHeader.style.marginBottom = '20px';
+                printHeader.style.paddingBottom = '15px';
+                printHeader.style.borderBottom = '2px solid #2c3e50';
+            }
+
             html2pdf().set(opt).from(element).save().then(() => {
-                // Restore buttons
-                buttons.forEach(btn => btn.style.display = '');
+                // Restore all original styles
+                originalStyles.forEach(item => {
+                    item.element.style.display = item.display;
+                });
             });
         }
         
