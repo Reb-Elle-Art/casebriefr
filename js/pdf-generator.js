@@ -55,6 +55,7 @@ class CasebriefrPDF {
         const printCitation = document.getElementById('print-citation');
         const printCourt = document.getElementById('print-court');
         const printDate = document.getElementById('print-date');
+        const printBriefedBy = document.getElementById('print-briefed-by');
         
         if (printCaseName) printCaseName.textContent = this.caseData.caseName || 'Case Name';
         if (printCitation) printCitation.textContent = this.caseData.citation;
@@ -66,6 +67,9 @@ class CasebriefrPDF {
                     month: 'long', 
                     day: 'numeric' 
                 }) : '';
+        }
+        if (printBriefedBy) {
+            printBriefedBy.textContent = this.caseData.briefedBy ? `Briefed by: ${this.caseData.briefedBy}` : '';
         }
         
         // Update all print content divs
