@@ -189,25 +189,30 @@
             font-size: 12px;
         }
         
-        /* ===== PRINT STYLES ===== */
-        .print-header {
+        /* ===== PRINT-ONLY CONTENT (Hidden on screen) ===== */
+        .print-only {
             display: none;
         }
         
-        .print-case-name {
-            font-size: 22px;
-            font-weight: 700;
-            color: #2c3e50;
+        .print-header {
             text-align: center;
-            margin-bottom: 8px;
+            margin-bottom: 30pt;
+            padding-bottom: 15pt;
+            border-bottom: 2pt solid #000;
+        }
+        
+        .print-case-name {
+            font-size: 18pt;
+            font-weight: bold;
             font-style: italic;
+            margin-bottom: 8pt;
+            text-align: center;
         }
         
         .print-case-meta {
+            font-size: 11pt;
+            color: #333;
             text-align: center;
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 20px;
         }
         
         .print-case-meta span:not(:empty)::after {
@@ -219,17 +224,34 @@
             content: "";
         }
         
-        .print-section-title {
-            display: none;
+        .print-section {
+            margin-bottom: 20pt;
         }
         
+        .print-section-title {
+            font-size: 12pt;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1pt;
+            margin-bottom: 8pt;
+            margin-top: 15pt;
+            border-bottom: 1pt solid #000;
+            padding-bottom: 3pt;
+        }
+        
+        .print-content {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 12pt;
+            line-height: 1.5;
+        }
+        
+        /* ===== PRINT STYLES ===== */
         @media print {
             body {
                 background: white;
                 padding: 0;
-                font-family: 'Times New Roman', Times, serif;
-                font-size: 12pt;
-                line-height: 1.5;
             }
             
             .container {
@@ -238,95 +260,32 @@
                 max-width: 100%;
             }
             
-            /* Hide interactive elements */
+            /* Hide all screen-only elements */
+            .brand-header,
             .button-row, 
             .brand-footer, 
             .screen-only,
-            .section-header,
-            label,
-            .hint {
-                display: none;
+            .form-section,
+            h1.screen-only,
+            .subtitle {
+                display: none !important;
             }
             
-            /* Hide form inputs, show print content */
-            textarea,
-            input[type="text"],
-            input[type="date"] {
-                display: none;
+            /* Show print-only content */
+            .print-only {
+                display: block !important;
             }
             
-            .print-content {
-                display: block;
-                white-space: pre-wrap;
-                word-wrap: break-word;
-                font-family: 'Times New Roman', Times, serif;
-                font-size: 12pt;
-                line-height: 1.5;
-                border: none;
-                padding: 0;
-                margin: 0;
-                background: transparent;
-            }
-            
-            /* Professional header */
-            .print-header {
-                display: block;
-                text-align: center;
-                margin-bottom: 30pt;
-                padding-bottom: 15pt;
-                border-bottom: 2pt solid #000;
-            }
-            
-            .print-case-name {
-                font-size: 18pt;
-                font-weight: bold;
-                font-style: italic;
-                margin-bottom: 8pt;
-                text-align: center;
-            }
-            
-            .print-case-meta {
-                font-size: 11pt;
-                color: #333;
-                text-align: center;
-            }
-            
-            /* Section styling */
-            .form-section {
+            /* Page break controls */
+            .print-section {
                 break-inside: avoid;
                 page-break-inside: avoid;
-                margin-bottom: 20pt;
-                border: none;
-            }
-            
-            .section-content {
-                padding: 0;
-            }
-            
-            /* Section headers in print */
-            .print-section-title {
-                display: block;
-                font-size: 12pt;
-                font-weight: bold;
-                text-transform: uppercase;
-                letter-spacing: 1pt;
-                margin-bottom: 8pt;
-                margin-top: 15pt;
-                border-bottom: 1pt solid #000;
-                padding-bottom: 3pt;
             }
             
             /* Prevent orphans/widows */
             .print-content {
                 orphans: 3;
                 widows: 3;
-            }
-        }
-        
-        /* Screen styles - hide print content */
-        @media screen {
-            .print-content {
-                display: none;
             }
         }
         
@@ -356,18 +315,10 @@
             <div class="brand-tagline">Professional Legal Case Briefing Tool</div>
         </div>
         
-        <!-- Print Header - Shows case info when printing -->
-        <div class="print-header">
-            <div class="print-case-name" id="print-case-name"></div>
-            <div class="print-case-meta">
-                <span id="print-citation"></span>
-                <span id="print-court"></span>
-                <span id="print-date"></span>
-            </div>
-        </div>
-        
         <h1 class="screen-only">Case Brief</h1>
         <p class="subtitle screen-only">Use this template to analyze and summarize legal cases</p>
+        
+        <!-- ===== SCREEN FORM (Hidden when printing) ===== -->
         
         <!-- Case Identification -->
         <div class="form-section">
@@ -413,8 +364,6 @@
                 <div class="form-group full-width">
                     <label for="facts">Relevant Facts</label>
                     <textarea id="facts" name="facts" class="large" placeholder="Summarize the key facts of the case. Who are the parties? What happened? What is the dispute about? Include only legally relevant facts."></textarea>
-                    <div class="print-content" id="print-facts"></div>
-                    <div class="print-section-title">Facts</div>
                     <p class="hint">Focus on facts material to the court's decision</p>
                 </div>
             </div>
@@ -427,8 +376,6 @@
                 <div class="form-group full-width">
                     <label for="procedural-history">Procedural Posture</label>
                     <textarea id="procedural-history" name="procedural_history" class="large" placeholder="How did this case reach this court? What happened in lower courts? What is the current procedural posture (e.g., appeal from dismissal, summary judgment, etc.)?"></textarea>
-                    <div class="print-content" id="print-procedural-history"></div>
-                    <div class="print-section-title">Procedural History</div>
                     <p class="hint">Trace the case's path through the judicial system</p>
                 </div>
             </div>
@@ -441,8 +388,6 @@
                 <div class="form-group full-width">
                     <label for="issues">Legal Question(s) Presented</label>
                     <textarea id="issues" name="issues" class="large" placeholder="State the legal question(s) the court must answer. Frame as questions that can be answered with yes/no or specific legal rules. Example: 'Does the First Amendment protect flag burning as symbolic speech?'"></textarea>
-                    <div class="print-content" id="print-issues"></div>
-                    <div class="print-section-title">Issue(s)</div>
                     <p class="hint">Write in question format. Include all sub-issues if applicable.</p>
                 </div>
             </div>
@@ -455,8 +400,6 @@
                 <div class="form-group full-width">
                     <label for="holding">Court's Decision</label>
                     <textarea id="holding" name="holding" placeholder="How did the court answer the legal question(s)? What was the outcome? (e.g., 'The Court held that...' or 'Reversed and remanded...')"></textarea>
-                    <div class="print-content" id="print-holding"></div>
-                    <div class="print-section-title">Holding</div>
                 </div>
             </div>
         </div>
@@ -468,8 +411,6 @@
                 <div class="form-group full-width">
                     <label for="rule">Legal Principle(s)</label>
                     <textarea id="rule" name="rule" class="large" placeholder="What legal rule(s), test(s), or standard(s) did the court apply or establish? State the rule clearly and precisely as articulated by the court."></textarea>
-                    <div class="print-content" id="print-rule"></div>
-                    <div class="print-section-title">Rule of Law</div>
                     <p class="hint">This is the binding precedent established by this case</p>
                 </div>
             </div>
@@ -482,8 +423,6 @@
                 <div class="form-group full-width">
                     <label for="reasoning">Court's Analysis</label>
                     <textarea id="reasoning" name="reasoning" class="large" placeholder="Explain the court's reasoning. How did the court reach its conclusion? What arguments did it consider? What precedents did it rely on or distinguish? What policy considerations influenced the decision?"></textarea>
-                    <div class="print-content" id="print-reasoning"></div>
-                    <div class="print-section-title">Reasoning / Rationale</div>
                     <p class="hint">This is often the longest section - explain the court's logic step by step</p>
                 </div>
             </div>
@@ -496,14 +435,10 @@
                 <div class="form-group full-width">
                     <label for="concurrence">Concurring Opinion(s)</label>
                     <textarea id="concurrence" name="concurrence" placeholder="If any justices concurred, summarize their reasoning. Do they agree with the result but for different reasons?"></textarea>
-                    <div class="print-content" id="print-concurrence"></div>
-                    <div class="print-section-title">Concurring Opinion(s)</div>
                 </div>
                 <div class="form-group full-width" style="margin-top: 15px;">
                     <label for="dissent">Dissenting Opinion(s)</label>
                     <textarea id="dissent" name="dissent" placeholder="If any justices dissented, summarize their objections. What rule would they have applied? Why do they disagree with the majority?"></textarea>
-                    <div class="print-content" id="print-dissent"></div>
-                    <div class="print-section-title">Dissenting Opinion(s)</div>
                 </div>
             </div>
         </div>
@@ -515,14 +450,10 @@
                 <div class="form-group full-width">
                     <label for="significance">Importance &amp; Impact</label>
                     <textarea id="significance" name="significance" class="large" placeholder="Why does this case matter? What is its significance in the broader legal landscape? How has it been applied in subsequent cases? What are the policy implications?"></textarea>
-                    <div class="print-content" id="print-significance"></div>
-                    <div class="print-section-title">Analysis &amp; Significance</div>
                 </div>
                 <div class="form-group full-width" style="margin-top: 15px;">
                     <label for="notes">Additional Notes</label>
                     <textarea id="notes" name="notes" placeholder="Any additional observations, questions, or connections to other cases/concepts."></textarea>
-                    <div class="print-content" id="print-notes"></div>
-                    <div class="print-section-title">Additional Notes</div>
                 </div>
             </div>
         </div>
@@ -535,6 +466,79 @@
         
         <div class="brand-footer">
             Created with Casebriefr — casebriefr.com
+        </div>
+        
+        <!-- ===== PRINT-ONLY CONTENT (Hidden on screen, shown when printing) ===== -->
+        <div class="print-only" id="print-container">
+            <!-- Print Header -->
+            <div class="print-header">
+                <div class="print-case-name" id="print-case-name"></div>
+                <div class="print-case-meta">
+                    <span id="print-citation"></span>
+                    <span id="print-court"></span>
+                    <span id="print-date"></span>
+                </div>
+            </div>
+            
+            <!-- Facts -->
+            <div class="print-section">
+                <div class="print-section-title">Facts</div>
+                <div class="print-content" id="print-facts"></div>
+            </div>
+            
+            <!-- Procedural History -->
+            <div class="print-section">
+                <div class="print-section-title">Procedural History</div>
+                <div class="print-content" id="print-procedural-history"></div>
+            </div>
+            
+            <!-- Issue(s) -->
+            <div class="print-section">
+                <div class="print-section-title">Issue(s)</div>
+                <div class="print-content" id="print-issues"></div>
+            </div>
+            
+            <!-- Holding -->
+            <div class="print-section">
+                <div class="print-section-title">Holding</div>
+                <div class="print-content" id="print-holding"></div>
+            </div>
+            
+            <!-- Rule of Law -->
+            <div class="print-section">
+                <div class="print-section-title">Rule of Law</div>
+                <div class="print-content" id="print-rule"></div>
+            </div>
+            
+            <!-- Reasoning/Rationale -->
+            <div class="print-section">
+                <div class="print-section-title">Reasoning / Rationale</div>
+                <div class="print-content" id="print-reasoning"></div>
+            </div>
+            
+            <!-- Concurring Opinions -->
+            <div class="print-section" id="print-concurrence-section">
+                <div class="print-section-title">Concurring Opinion(s)</div>
+                <div class="print-content" id="print-concurrence"></div>
+            </div>
+            
+            <!-- Dissenting Opinions -->
+            <div class="print-section" id="print-dissent-section">
+                <div class="print-section-title">Dissenting Opinion(s)</div>
+                <div class="print-content" id="print-dissent"></div>
+            </div>
+            
+            <!-- Analysis & Significance -->
+            <div class="print-section" id="print-significance-section">
+                <div class="print-section-title">Analysis &amp; Significance</div>
+                <div class="print-content" id="print-significance"></div>
+            </div>
+            
+            <!-- Additional Notes -->
+            <div class="print-section" id="print-notes-section">
+                <div class="print-section-title">Additional Notes</div>
+                <div class="print-content" id="print-notes"></div>
+            </div>
         </div>
     </div>
     
