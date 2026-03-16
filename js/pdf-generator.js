@@ -109,65 +109,6 @@ class CasebriefrPDF {
         });
     }
 
-    // Generate PDF using html2pdf
-    async generatePDF() {
-        this.prepareContent();
-        
-        const filename = this.generateFilename();
-        
-        // Get the print container
-        const printContainer = document.getElementById('print-container');
-        if (!printContainer) {
-            console.error('Print container not found');
-            return;
-        }
-        
-        // Temporarily show the print container for PDF generation
-        const originalDisplay = printContainer.style.display;
-        printContainer.style.display = 'block';
-        printContainer.style.position = 'absolute';
-        printContainer.style.top = '0';
-        printContainer.style.left = '0';
-        printContainer.style.width = '8.5in';
-        printContainer.style.background = 'white';
-        printContainer.style.padding = '40px';
-        printContainer.style.zIndex = '-1000';
-        
-        const opt = {
-            margin: [0.5, 0.5, 0.5, 0.5],
-            filename: filename,
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { 
-                scale: 2, 
-                useCORS: true,
-                letterRendering: true,
-                windowWidth: 1200
-            },
-            jsPDF: { 
-                unit: 'in', 
-                format: 'letter', 
-                orientation: 'portrait'
-            }
-        };
-
-        try {
-            await html2pdf().set(opt).from(printContainer).save();
-        } catch (error) {
-            console.error('PDF generation failed:', error);
-            alert('PDF generation failed. Please try using Print to PDF instead.');
-        } finally {
-            // Restore original state
-            printContainer.style.display = originalDisplay;
-            printContainer.style.position = '';
-            printContainer.style.top = '';
-            printContainer.style.left = '';
-            printContainer.style.width = '';
-            printContainer.style.background = '';
-            printContainer.style.padding = '';
-            printContainer.style.zIndex = '';
-        }
-    }
-
     // Print using browser print dialog
     print() {
         this.prepareContent();
