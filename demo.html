@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Casebriefr — Marbury v. Madison</title>
+    <title>Casebriefr - Marbury v. Madison Demo</title>
     <style>
+        /* ===== BASE STYLES ===== */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -26,6 +27,7 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         
+        /* ===== BRANDING ===== */
         .brand-header {
             text-align: center;
             margin-bottom: 30px;
@@ -46,7 +48,8 @@
             margin-top: 5px;
         }
         
-        h1 {
+        /* ===== FORM STYLES ===== */
+        h1.screen-only {
             text-align: center;
             color: #1a1a1a;
             margin-bottom: 10px;
@@ -60,6 +63,31 @@
             color: #666;
             font-size: 14px;
             margin-bottom: 30px;
+        }
+        
+        .demo-banner {
+            background: #e8f4f8;
+            border: 1px solid #3498db;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .demo-banner p {
+            margin: 0;
+            color: #2c3e50;
+            font-size: 14px;
+        }
+        
+        .demo-banner a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .demo-banner a:hover {
+            text-decoration: underline;
         }
         
         .form-section {
@@ -139,6 +167,7 @@
             margin-top: 4px;
         }
         
+        /* ===== BUTTONS ===== */
         .button-row {
             display: flex;
             justify-content: center;
@@ -146,8 +175,7 @@
             margin-top: 30px;
         }
 
-        .print-btn,
-        .download-btn {
+        .print-btn {
             padding: 12px 24px;
             border: none;
             border-radius: 4px;
@@ -156,24 +184,12 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             transition: background 0.2s;
-        }
-
-        .print-btn {
             background: #2c3e50;
             color: white;
         }
 
         .print-btn:hover {
             background: #1a252f;
-        }
-
-        .download-btn {
-            background: #3498db;
-            color: white;
-        }
-
-        .download-btn:hover {
-            background: #2980b9;
         }
         
         .brand-footer {
@@ -185,24 +201,30 @@
             font-size: 12px;
         }
         
-        .print-header {
+        /* ===== PRINT-ONLY CONTENT (Hidden on screen) ===== */
+        .print-only {
             display: none;
         }
         
-        .print-case-name {
-            font-size: 22px;
-            font-weight: 700;
-            color: #2c3e50;
+        .print-header {
             text-align: center;
-            margin-bottom: 8px;
+            margin-bottom: 30pt;
+            padding-bottom: 15pt;
+            border-bottom: 2pt solid #000;
+        }
+        
+        .print-case-name {
+            font-size: 18pt;
+            font-weight: bold;
             font-style: italic;
+            margin-bottom: 8pt;
+            text-align: center;
         }
         
         .print-case-meta {
+            font-size: 11pt;
+            color: #333;
             text-align: center;
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 20px;
         }
         
         .print-case-meta span:not(:empty)::after {
@@ -214,81 +236,77 @@
             content: "";
         }
         
-        /* Demo watermark - only visible when printing */
-        .demo-watermark {
-            display: none;
+        .print-briefed-by {
+            font-size: 10pt;
+            color: #666;
+            text-align: center;
+            margin-top: 8pt;
+            font-style: italic;
         }
         
-        /* Print styles */
+        .print-section {
+            margin-bottom: 20pt;
+        }
+        
+        .print-section-title {
+            font-size: 12pt;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1pt;
+            margin-bottom: 8pt;
+            margin-top: 15pt;
+            border-bottom: 1pt solid #000;
+            padding-bottom: 3pt;
+        }
+        
+        .print-content {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 12pt;
+            line-height: 1.5;
+        }
+        
+        /* ===== PRINT STYLES ===== */
         @media print {
             body {
                 background: white;
                 padding: 0;
             }
+            
             .container {
                 box-shadow: none;
-                padding: 20px;
+                padding: 0;
                 max-width: 100%;
             }
-            .button-row, .brand-footer, .screen-only {
-                display: none;
+            
+            /* Hide all screen-only elements */
+            .brand-header,
+            .demo-banner,
+            .button-row, 
+            .brand-footer, 
+            .screen-only,
+            .form-section,
+            h1.screen-only,
+            .subtitle {
+                display: none !important;
             }
-            .print-header {
-                display: block;
-                margin-bottom: 20px;
-                padding-bottom: 15px;
-                border-bottom: 2px solid #2c3e50;
+            
+            /* Show print-only content */
+            .print-only {
+                display: block !important;
             }
-            /* Hide Case Identification section in print */
-            .form-section:first-of-type {
-                display: none;
-            }
-            input {
-                border: 1px solid #999;
-                border-bottom: 2px solid #333;
-                background: transparent;
-            }
-            /* Textareas become divs that show all content */
-            textarea {
-                display: none;
-            }
-            .print-content {
-                display: block;
-                white-space: pre-wrap;
-                word-wrap: break-word;
-                font-family: inherit;
-                font-size: 14px;
-                line-height: 1.6;
-                border: 1px solid #999;
-                padding: 10px 12px;
-                min-height: 60px;
-                background: white;
-            }
-            .form-section {
+            
+            /* Page break controls */
+            .print-section {
                 break-inside: avoid;
                 page-break-inside: avoid;
-                margin-bottom: 15px;
             }
-            .section-content {
-                padding: 12px;
-            }
-            /* Demo watermark for print */
-            .demo-watermark {
-                display: block;
-                position: fixed;
-                bottom: 15px;
-                right: 15px;
-                font-size: 9px;
-                color: #999;
-                font-style: italic;
-                opacity: 0.7;
-            }
-        }
-        
-        /* Screen styles - hide print content */
-        @media screen {
+            
+            /* Prevent orphans/widows */
             .print-content {
-                display: none;
+                orphans: 3;
+                widows: 3;
             }
         }
         
@@ -303,28 +321,31 @@
             .brand-name {
                 font-size: 28px;
             }
+            .button-row {
+                flex-direction: column;
+                align-items: center;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- Brand Header -->
         <div class="brand-header">
             <div class="brand-name">Casebriefr</div>
             <div class="brand-tagline">Professional Legal Case Briefing Tool</div>
         </div>
         
-        <!-- Print Header - Shows case info when printing -->
-        <div class="print-header">
-            <div class="print-case-name" id="print-case-name"></div>
-            <div class="print-case-meta">
-                <span id="print-citation"></span>
-                <span id="print-court"></span>
-                <span id="print-date"></span>
-            </div>
+        <h1 class="screen-only">Case Brief</h1>
+        <p class="subtitle screen-only">Demo: Marbury v. Madison</p>
+        
+        <!-- Demo Banner -->
+        <div class="demo-banner">
+            <p><strong>Demo Mode:</strong> This is a sample case brief for <em>Marbury v. Madison</em>. 
+            <a href="template-v2.html">Create your own brief →</a></p>
         </div>
         
-        <h1 class="screen-only">Case Brief</h1>
-        <p class="subtitle screen-only">Sample: Marbury v. Madison — Edit any field to customize</p>
+        <!-- ===== SCREEN FORM (Hidden when printing) ===== -->
         
         <!-- Case Identification -->
         <div class="form-section">
@@ -343,7 +364,7 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label for="court">Court</label>
-                        <input type="text" id="court" name="court" value="Supreme Court of the United States">
+                        <input type="text" id="court" name="court" value="U.S. Supreme Court">
                     </div>
                     <div class="form-group">
                         <label for="date">Date Decided</label>
@@ -357,7 +378,7 @@
                     </div>
                     <div class="form-group">
                         <label for="briefed-by">Briefed By</label>
-                        <input type="text" id="briefed-by" name="briefed_by" placeholder="Your name">
+                        <input type="text" id="briefed-by" name="briefed_by" value="Casebriefr Demo">
                     </div>
                 </div>
             </div>
@@ -369,12 +390,7 @@
             <div class="section-content">
                 <div class="form-group full-width">
                     <label for="facts">Relevant Facts</label>
-                    <textarea id="facts" name="facts" class="large">• Adams (Federalist) loses presidency to Jefferson (Republican-Democrat) in the 1800 election
-• Before leaving office, Adams appoints 42 justices of the peace for D.C., including William Marbury
-• Marbury's commission is signed by the President and sealed by the Secretary of State (Marshall himself), but not delivered before Jefferson's inauguration
-• Jefferson's administration, through Secretary of State James Madison, refuses to deliver Marbury's commission
-• Marbury seeks a writ of mandamus directly from the Supreme Court to compel delivery</textarea>
-                    <div class="print-content" id="print-facts"></div>
+                    <textarea id="facts" name="facts" class="large">William Marbury was appointed as a justice of the peace for the District of Columbia by outgoing President John Adams. The appointment was confirmed by the Senate and signed by the President. However, the commission was not delivered before Adams left office. James Madison, the new Secretary of State under President Thomas Jefferson, refused to deliver the commission. Marbury sued Madison directly in the Supreme Court, seeking a writ of mandamus to compel delivery of the commission.</textarea>
                     <p class="hint">Focus on facts material to the court's decision</p>
                 </div>
             </div>
@@ -386,10 +402,7 @@
             <div class="section-content">
                 <div class="form-group full-width">
                     <label for="procedural-history">Procedural Posture</label>
-                    <textarea id="procedural-history" name="procedural_history" class="large">• Marbury petitions the Supreme Court directly for a writ of mandamus under §13 of the Judiciary Act of 1789
-• The case arises under the Court's original jurisdiction (not appellate)
-• Supreme Court hears the case and issues its opinion</textarea>
-                    <div class="print-content" id="print-procedural-history"></div>
+                    <textarea id="procedural-history" name="procedural_history" class="large">Marbury brought his suit directly to the Supreme Court under Section 13 of the Judiciary Act of 1789, which authorized the Court to issue writs of mandamus to persons holding office under the authority of the United States. The case was heard on original jurisdiction in the Supreme Court.</textarea>
                     <p class="hint">Trace the case's path through the judicial system</p>
                 </div>
             </div>
@@ -401,11 +414,9 @@
             <div class="section-content">
                 <div class="form-group full-width">
                     <label for="issues">Legal Question(s) Presented</label>
-                    <textarea id="issues" name="issues" class="large">1. Has Marbury a right to the commission he demands?
-2. If he has a right, and that right has been violated, do the laws of the country afford him a remedy?
-3. If they do afford him a remedy, is it a mandamus issuing from the Supreme Court?
-4. Does §13 of the Judiciary Act of 1789, which grants the Supreme Court original jurisdiction to issue writs of mandamus, violate Article III of the Constitution?</textarea>
-                    <div class="print-content" id="print-issues"></div>
+                    <textarea id="issues" name="issues" class="large">1. Do the plaintiffs have a right to receive their commissions?
+2. If they have a right, and that right has been violated, do the laws of the country afford a remedy?
+3. If they do afford a remedy, is it a mandamus issuing from this court?</textarea>
                     <p class="hint">Write in question format. Include all sub-issues if applicable.</p>
                 </div>
             </div>
@@ -417,8 +428,7 @@
             <div class="section-content">
                 <div class="form-group full-width">
                     <label for="holding">Court's Decision</label>
-                    <textarea id="holding" name="holding">The Court held that while Marbury had a vested legal right to the commission and the laws did afford him a remedy, the Supreme Court could not issue the writ because §13 of the Judiciary Act unconstitutionally expanded the Court's original jurisdiction beyond what Article III permits.</textarea>
-                    <div class="print-content" id="print-holding"></div>
+                    <textarea id="holding" name="holding">The Court held that while Marbury had a right to the commission and the law afforded him a remedy, the Supreme Court did not have original jurisdiction to issue a writ of mandamus in this case. Section 13 of the Judiciary Act of 1789, which purported to give the Court such jurisdiction, was unconstitutional because it expanded the Court's original jurisdiction beyond what Article III of the Constitution allowed.</textarea>
                 </div>
             </div>
         </div>
@@ -429,11 +439,7 @@
             <div class="section-content">
                 <div class="form-group full-width">
                     <label for="rule">Legal Principle(s)</label>
-                    <textarea id="rule" name="rule" class="large">1. Judicial Review: It is emphatically the province and duty of the judicial department to say what the law is.
-2. The Constitution is the "superior, paramount law" and ordinary statutes that conflict with it are void.
-3. Article III fixes the Supreme Court's original jurisdiction; Congress cannot enlarge it by statute.
-4. Congress may regulate only the Supreme Court's appellate jurisdiction, not its original jurisdiction.</textarea>
-                    <div class="print-content" id="print-rule"></div>
+                    <textarea id="rule" name="rule" class="large">It is emphatically the province and duty of the judicial department to say what the law is. The Constitution is superior to any ordinary act of the legislature, and the Constitution, not such ordinary act, must govern the case to which they both apply. The particular phraseology of the Constitution of the United States confirms and strengthens the principle that a law repugnant to the Constitution is void, and that courts, as well as other departments, are bound by that instrument.</textarea>
                     <p class="hint">This is the binding precedent established by this case</p>
                 </div>
             </div>
@@ -445,23 +451,15 @@
             <div class="section-content">
                 <div class="form-group full-width">
                     <label for="reasoning">Court's Analysis</label>
-                    <textarea id="reasoning" name="reasoning" class="large">Marshall structured the opinion in three parts:
+                    <textarea id="reasoning" name="reasoning" class="large">Chief Justice Marshall structured the opinion around three questions:
 
-1. Right to the Commission
-• The appointment was complete when the commission was signed and sealed
-• Delivery was merely a ministerial act, not a discretionary one
-• Therefore, Marbury had a vested legal right
+First, Marbury had a legal right to the commission because the appointment was complete when signed and sealed. The delivery was merely a ministerial duty.
 
-2. Remedy Exists
-• Where there's a legal right, there's a legal remedy
-• The violation of a vested legal right is a wrong that courts can redress
+Second, where there is a legal right, there must be a legal remedy. The very essence of civil liberty certainly consists in the right of every individual to claim the protection of the laws.
 
-3. The Supreme Court Cannot Provide This Remedy
-• Article III §2 defines original jurisdiction narrowly: cases affecting ambassadors, other public ministers, and those in which a state is a party
-• §13 of the Judiciary Act attempts to grant original jurisdiction for writs of mandamus
-• This conflicts with Article III and is therefore unconstitutional
-• The Court cannot enforce an unconstitutional statute, even to provide justice in a particular case</textarea>
-                    <div class="print-content" id="print-reasoning"></div>
+Third, the Supreme Court could not issue the mandamus because it lacked original jurisdiction. Article III specifically enumerates the cases in which the Supreme Court has original jurisdiction, and this case did not qualify. Section 13 of the Judiciary Act, which attempted to grant such jurisdiction, was therefore unconstitutional.
+
+This established the principle of judicial review — the power of federal courts to declare acts of Congress unconstitutional.</textarea>
                     <p class="hint">This is often the longest section - explain the court's logic step by step</p>
                 </div>
             </div>
@@ -473,13 +471,11 @@
             <div class="section-content">
                 <div class="form-group full-width">
                     <label for="concurrence">Concurring Opinion(s)</label>
-                    <textarea id="concurrence" name="concurrence">None</textarea>
-                    <div class="print-content" id="print-concurrence"></div>
+                    <textarea id="concurrence" name="concurrence">None. The decision was unanimous.</textarea>
                 </div>
                 <div class="form-group full-width" style="margin-top: 15px;">
                     <label for="dissent">Dissenting Opinion(s)</label>
-                    <textarea id="dissent" name="dissent">None</textarea>
-                    <div class="print-content" id="print-dissent"></div>
+                    <textarea id="dissent" name="dissent">None.</textarea>
                 </div>
             </div>
         </div>
@@ -490,165 +486,101 @@
             <div class="section-content">
                 <div class="form-group full-width">
                     <label for="significance">Importance &amp; Impact</label>
-                    <textarea id="significance" name="significance" class="large">• Established the doctrine of judicial review — the Supreme Court's authority to declare acts of Congress unconstitutional
-• Transformed the judiciary into a co-equal branch of government
-• Created the framework for constitutional interpretation that persists today
-• One of the most cited and foundational decisions in American law
-• Marshall's political genius: chastised Jefferson's administration while avoiding a direct confrontation the Court would lose</textarea>
-                    <div class="print-content" id="print-significance"></div>
+                    <textarea id="significance" name="significance" class="large">Marbury v. Madison established the principle of judicial review in the United States, making the Supreme Court the ultimate interpreter of the Constitution. This foundational case gave the judiciary the power to invalidate acts of Congress that conflict with the Constitution.
+
+The decision has been cited in countless subsequent cases involving constitutional challenges. It remains the cornerstone of American constitutional law and the basis for the Supreme Court's role as a co-equal branch of government with the power to check both Congress and the Executive.</textarea>
                 </div>
                 <div class="form-group full-width" style="margin-top: 15px;">
                     <label for="notes">Additional Notes</label>
-                    <textarea id="notes" name="notes">• Political Context: Marshall was Adams's Secretary of State who had sealed the commissions. The decision allowed him to criticize Jefferson without issuing an order Jefferson would ignore.
-• Irony: Marbury never got his commission, but the case established the Court's power.
-• Marshall's Strategy: Found the plaintiffs were right on the merits but wrong on jurisdiction — a way to have his cake and eat it too.
-• Still taught as the first case in virtually every constitutional law course in the United States.</textarea>
-                    <div class="print-content" id="print-notes"></div>
+                    <textarea id="notes" name="notes">This case is typically the first case studied in American constitutional law courses. It established not only judicial review but also the principle that the Constitution is supreme law, binding on all branches of government.</textarea>
                 </div>
             </div>
         </div>
         
+        <!-- Action Button -->
         <div class="button-row">
-            <button class="print-btn" onclick="preparePrint()">Print</button>
-            <button class="download-btn" onclick="downloadPDF()">Download PDF</button>
+            <button class="print-btn" onclick="casebriefrPDF.print()">Print / Save as PDF</button>
         </div>
         
         <div class="brand-footer">
             Created with Casebriefr — casebriefr.com
         </div>
         
-        <!-- Demo watermark - only visible when printing -->
-        <div class="demo-watermark">Casebriefr Demo</div>
+        <!-- ===== PRINT-ONLY CONTENT (Hidden on screen, shown when printing) ===== -->
+        <div class="print-only" id="print-container">
+            <!-- Print Header -->
+            <div class="print-header">
+                <div class="print-case-name" id="print-case-name"></div>
+                <div class="print-case-meta">
+                    <span id="print-citation"></span>
+                    <span id="print-court"></span>
+                    <span id="print-date"></span>
+                </div>
+                <div class="print-briefed-by" id="print-briefed-by"></div>
+            </div>
+            
+            <!-- Facts -->
+            <div class="print-section">
+                <div class="print-section-title">Facts</div>
+                <div class="print-content" id="print-facts"></div>
+            </div>
+            
+            <!-- Procedural History -->
+            <div class="print-section">
+                <div class="print-section-title">Procedural History</div>
+                <div class="print-content" id="print-procedural-history"></div>
+            </div>
+            
+            <!-- Issue(s) -->
+            <div class="print-section">
+                <div class="print-section-title">Issue(s)</div>
+                <div class="print-content" id="print-issues"></div>
+            </div>
+            
+            <!-- Holding -->
+            <div class="print-section">
+                <div class="print-section-title">Holding</div>
+                <div class="print-content" id="print-holding"></div>
+            </div>
+            
+            <!-- Rule of Law -->
+            <div class="print-section">
+                <div class="print-section-title">Rule of Law</div>
+                <div class="print-content" id="print-rule"></div>
+            </div>
+            
+            <!-- Reasoning/Rationale -->
+            <div class="print-section">
+                <div class="print-section-title">Reasoning / Rationale</div>
+                <div class="print-content" id="print-reasoning"></div>
+            </div>
+            
+            <!-- Concurring Opinions -->
+            <div class="print-section" id="print-concurrence-section">
+                <div class="print-section-title">Concurring Opinion(s)</div>
+                <div class="print-content" id="print-concurrence"></div>
+            </div>
+            
+            <!-- Dissenting Opinions -->
+            <div class="print-section" id="print-dissent-section">
+                <div class="print-section-title">Dissenting Opinion(s)</div>
+                <div class="print-content" id="print-dissent"></div>
+            </div>
+            
+            <!-- Analysis & Significance -->
+            <div class="print-section" id="print-significance-section">
+                <div class="print-section-title">Analysis &amp; Significance</div>
+                <div class="print-content" id="print-significance"></div>
+            </div>
+            
+            <!-- Additional Notes -->
+            <div class="print-section" id="print-notes-section">
+                <div class="print-section-title">Additional Notes</div>
+                <div class="print-content" id="print-notes"></div>
+            </div>
+        </div>
     </div>
     
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <script>
-        function downloadPDF() {
-            updatePrintContent();
-            const caseName = document.getElementById('case-name').value || 'Case';
-            const filename = `Casebriefr - ${caseName}.pdf`;
-
-            const element = document.querySelector('.container');
-            const opt = {
-                margin: [0.5, 0.5, 0.5, 0.5],
-                filename: filename,
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2, useCORS: true },
-                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-            };
-
-            // Store original styles to restore later
-            const originalStyles = [];
-
-            // Hide buttons for PDF generation
-            const buttons = document.querySelectorAll('.print-btn, .brand-footer, .button-row');
-            buttons.forEach(btn => {
-                originalStyles.push({ element: btn, display: btn.style.display });
-                btn.style.display = 'none';
-            });
-
-            // Hide textareas and show print-content divs for PDF
-            const textareas = document.querySelectorAll('textarea');
-            textareas.forEach(textarea => {
-                originalStyles.push({ element: textarea, display: textarea.style.display });
-                textarea.style.display = 'none';
-            });
-
-            const printContents = document.querySelectorAll('.print-content');
-            printContents.forEach(div => {
-                originalStyles.push({ element: div, display: div.style.display });
-                div.style.display = 'block';
-                // Apply print-like styling for PDF generation
-                div.style.whiteSpace = 'pre-wrap';
-                div.style.wordWrap = 'break-word';
-                div.style.fontFamily = 'inherit';
-                div.style.fontSize = '14px';
-                div.style.lineHeight = '1.6';
-                div.style.border = '1px solid #999';
-                div.style.padding = '10px 12px';
-                div.style.minHeight = '60px';
-                div.style.background = 'white';
-                div.style.marginTop = '5px';
-            });
-
-            // Hide the first form section (Case Identification) in PDF
-            const caseIdSection = document.querySelector('.form-section:first-of-type');
-            if (caseIdSection) {
-                originalStyles.push({ element: caseIdSection, display: caseIdSection.style.display });
-                caseIdSection.style.display = 'none';
-            }
-
-            // Hide labels and hints in PDF
-            const labels = document.querySelectorAll('label, .hint');
-            labels.forEach(label => {
-                originalStyles.push({ element: label, display: label.style.display });
-                label.style.display = 'none';
-            });
-
-            // Hide brand header in PDF (print-header will show instead)
-            const brandHeader = document.querySelector('.brand-header');
-            if (brandHeader) {
-                originalStyles.push({ element: brandHeader, display: brandHeader.style.display });
-                brandHeader.style.display = 'none';
-            }
-
-            // Show print header
-            const printHeader = document.querySelector('.print-header');
-            if (printHeader) {
-                originalStyles.push({ element: printHeader, display: printHeader.style.display });
-                printHeader.style.display = 'block';
-                printHeader.style.marginBottom = '20px';
-                printHeader.style.paddingBottom = '15px';
-                printHeader.style.borderBottom = '2px solid #2c3e50';
-            }
-
-            html2pdf().set(opt).from(element).save().then(() => {
-                // Restore all original styles
-                originalStyles.forEach(item => {
-                    item.element.style.display = item.display;
-                });
-            });
-        }
-        
-        function updatePrintContent() {
-            // Copy textarea content to print divs
-            const textareas = document.querySelectorAll('textarea');
-            textareas.forEach(textarea => {
-                const printDiv = document.getElementById('print-' + textarea.id);
-                if (printDiv) {
-                    printDiv.textContent = textarea.value;
-                }
-            });
-            
-            // Update print header
-            const caseName = document.getElementById('case-name').value;
-            const citation = document.getElementById('citation').value;
-            const court = document.getElementById('court').value;
-            const date = document.getElementById('date').value;
-            
-            document.getElementById('print-case-name').textContent = caseName || 'Case Name';
-            document.getElementById('print-citation').textContent = citation;
-            document.getElementById('print-court').textContent = court;
-            document.getElementById('print-date').textContent = date ? new Date(date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
-        }
-        
-        function preparePrint() {
-            updatePrintContent();
-            window.print();
-        }
-        
-        // Update before print event (for Ctrl+P)
-        window.addEventListener('beforeprint', updatePrintContent);
-        
-        // Sync content as user types (optional - keeps print divs updated)
-        document.querySelectorAll('textarea').forEach(textarea => {
-            textarea.addEventListener('input', function() {
-                const printDiv = document.getElementById('print-' + this.id);
-                if (printDiv) {
-                    printDiv.textContent = this.value;
-                }
-            });
-        });
-    </script>
+    <script src="js/pdf-generator.js"></script>
 </body>
 </html>
