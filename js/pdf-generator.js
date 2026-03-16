@@ -122,23 +122,16 @@ class CasebriefrPDF {
             return;
         }
         
-        // Clone the print container for PDF generation
-        const clone = printContainer.cloneNode(true);
-        
-        // Style the clone for PDF output
-        clone.style.display = 'block';
-        clone.style.background = 'white';
-        clone.style.padding = '40px';
-        clone.style.fontFamily = "'Times New Roman', Times, serif";
-        clone.style.fontSize = '12pt';
-        clone.style.lineHeight = '1.5';
-        clone.style.maxWidth = '8.5in';
-        clone.style.margin = '0 auto';
-        
-        // Temporarily append to body for html2pdf
-        clone.style.position = 'absolute';
-        clone.style.left = '-9999px';
-        document.body.appendChild(clone);
+        // Temporarily show the print container for PDF generation
+        const originalDisplay = printContainer.style.display;
+        printContainer.style.display = 'block';
+        printContainer.style.position = 'absolute';
+        printContainer.style.top = '0';
+        printContainer.style.left = '0';
+        printContainer.style.width = '8.5in';
+        printContainer.style.background = 'white';
+        printContainer.style.padding = '40px';
+        printContainer.style.zIndex = '-1000';
         
         const opt = {
             margin: [0.5, 0.5, 0.5, 0.5],
@@ -147,7 +140,8 @@ class CasebriefrPDF {
             html2canvas: { 
                 scale: 2, 
                 useCORS: true,
-                letterRendering: true
+                letterRendering: true,
+                windowWidth: 1200
             },
             jsPDF: { 
                 unit: 'in', 
@@ -157,13 +151,20 @@ class CasebriefrPDF {
         };
 
         try {
-            await html2pdf().set(opt).from(clone).save();
+            await html2pdf().set(opt).from(printContainer).save();
         } catch (error) {
             console.error('PDF generation failed:', error);
             alert('PDF generation failed. Please try using Print to PDF instead.');
         } finally {
-            // Clean up
-            document.body.removeChild(clone);
+            // Restore original state
+            printContainer.style.display = originalDisplay;
+            printContainer.style.position = '';
+            printContainer.style.top = '';
+            printContainer.style.left = '';
+            printContainer.style.width = '';
+            printContainer.style.background = '';
+            printContainer.style.padding = '';
+            printContainer.style.zIndex = '';
         }
     }
 
