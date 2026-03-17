@@ -165,7 +165,10 @@ class CasebriefrPDF {
                 body: JSON.stringify({
                     filename: filename,
                     content: content,
-                    title: this.caseData.caseName
+                    title: this.caseData.caseName,
+                    citation: this.caseData.citation,
+                    court: this.caseData.court,
+                    snippet: this.generateSnippet()
                 })
             });
             
@@ -236,6 +239,17 @@ class CasebriefrPDF {
     formatContent(text) {
         if (!text) return '';
         return text.split('\n\n').map(p => `<p>${p.replace(/\n/g, '<br>')}</p>`).join('');
+    }
+    
+    // Generate a snippet for the gallery (first 150 chars of facts or holding)
+    generateSnippet() {
+        const text = this.caseData.facts || this.caseData.holding || this.caseData.reasoning || '';
+        if (!text) return 'Brief submitted via Casebriefr';
+        
+        // Clean up and truncate
+        const clean = text.replace(/\s+/g, ' ').trim();
+        if (clean.length <= 150) return clean;
+        return clean.substring(0, 150) + '...';
     }
 }
 
