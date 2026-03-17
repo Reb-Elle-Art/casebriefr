@@ -179,7 +179,10 @@ class CasebriefrPDF {
             const result = await response.json();
             
             if (result.success) {
-                alert('Brief submitted successfully! It will appear in the d-Briefs gallery shortly.');
+                const viewInGallery = confirm('Brief submitted successfully! 🎉\n\nWould you like to view it in the d-Briefs gallery?');
+                if (viewInGallery) {
+                    window.open('https://d-briefs.com/gallery.html', '_blank');
+                }
             } else {
                 throw new Error(result.error || 'Unknown error');
             }
