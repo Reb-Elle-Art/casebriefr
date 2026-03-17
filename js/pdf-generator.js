@@ -151,27 +151,21 @@ class CasebriefrPDF {
         submitBtn.textContent = 'Submitting...';
         
         try {
+            // Generate filename from case name
+            const filename = this.caseData.caseName.replace(/[^a-zA-Z0-9\s]/g, '').trim().replace(/\s+/g, '-') + '.html';
+            
+            // Generate HTML content for the brief
+            const content = this.generateBriefHTML();
+            
             const response = await fetch('https://casebriefr-worker.zoe-270.workers.dev/api/submit-brief', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    caseName: this.caseData.caseName,
-                    citation: this.caseData.citation,
-                    court: this.caseData.court,
-                    dateDecided: this.caseData.dateDecided,
-                    briefedBy: this.caseData.briefedBy,
-                    facts: this.caseData.facts,
-                    proceduralHistory: this.caseData.proceduralHistory,
-                    issues: this.caseData.issues,
-                    holding: this.caseData.holding,
-                    rule: this.caseData.rule,
-                    reasoning: this.caseData.reasoning,
-                    concurrence: this.caseData.concurrence,
-                    dissent: this.caseData.dissent,
-                    significance: this.caseData.significance,
-                    notes: this.caseData.notes
+                    filename: filename,
+                    content: content,
+                    title: this.caseData.caseName
                 })
             });
             
@@ -193,6 +187,55 @@ class CasebriefrPDF {
             submitBtn.disabled = false;
             submitBtn.textContent = originalText;
         }
+    }
+    
+    // Generate HTML content for the brief (for submission to gallery)
+    generateBriefHTML() {
+        const date = new Date().toISOString().split('T')[0];
+        const briefedBy = this.caseData.briefedBy || 'Anonymous';
+        
+        return `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${this.caseData.caseName} | Case Brief</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; line-height: 1.6; }
+        .header { text-align: center; border-bottom: 2px solid #2c3e50; padding-bottom: 20px; margin-bottom: 30px; }
+        .case-name { font-size: 24px; font-weight: bold; font-style: italic; margin-bottom: 10px; }
+        .meta { color: #666; font-size: 14px; }
+        .section { margin-bottom: 25px; }
+        .section-title { font-size: 16px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; color: #2c3e50; margin-bottom: 10px; }
+        .briefed-by { text-align: center; color: #888; font-size: 12px; margin-top: 40px; font-style: italic; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="case-name">${this.caseData.caseName}</div>
+        <div class="meta">${this.caseData.citation}${this.caseData.court ? ' | ' + this.caseData.court : ''}${this.caseData.dateDecided ? ' | ' + this.caseData.dateDecided : ''}</div>
+    </div>
+    
+    ${this.caseData.facts ? `<div class="section"><div class="section-title">Facts</div><div>${this.formatContent(this.caseData.facts)}</div></div>` : ''}
+    ${this.caseData.proceduralHistory ? `<div class="section"><div class="section-title">Procedural History</div><div>${this.formatContent(this.caseData.proceduralHistory)}</div></div>` : ''}
+    ${this.caseData.issues ? `<div class="section"><div class="section-title">Issues</div><div>${this.formatContent(this.caseData.issues)}</div></div>` : ''}
+    ${this.caseData.holding ? `<div class="section"><div class="section-title">Holding</div><div>${this.formatContent(this.caseData.holding)}</div></div>` : ''}
+    ${this.caseData.rule ? `<div class="section"><div class="section-title">Rule of Law</div><div>${this.formatContent(this.caseData.rule)}</div></div>` : ''}
+    ${this.caseData.reasoning ? `<div class="section"><div class="section-title">Reasoning</div><div>${this.formatContent(this.caseData.reasoning)}</div></div>` : ''}
+    ${this.caseData.concurrence ? `<div class="section"><div class="section-title">Concurring Opinion</div><div>${this.formatContent(this.caseData.concurrence)}</div></div>` : ''}
+    ${this.caseData.dissent ? `<div class="section"><div class="section-title">Dissenting Opinion</div><div>${this.formatContent(this.caseData.dissent)}</div></div>` : ''}
+    ${this.caseData.significance ? `<div class="section"><div class="section-title">Analysis & Significance</div><div>${this.formatContent(this.caseData.significance)}</div></div>` : ''}
+    ${this.caseData.notes ? `<div class="section"><div class="section-title">Additional Notes</div><div>${this.formatContent(this.caseData.notes)}</div></div>` : ''}
+    
+    <div class="briefed-by">Briefed by ${briefedBy} on ${date}</div>
+</body>
+</html>`;
+    }
+    
+    // Format content with paragraph breaks
+    formatContent(text) {
+        if (!text) return '';
+        return text.split('\n\n').map(p => `<p>${p.replace(/\n/g, '<br>')}</p>`).join('');
     }
 }
 
