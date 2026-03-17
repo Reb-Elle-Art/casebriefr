@@ -129,6 +129,71 @@ class CasebriefrPDF {
             document.title = originalTitle;
         }, 100);
     }
+
+    // Submit brief to d-Briefs gallery via Cloudflare Worker
+    async submitToDBrief() {
+        this.collectData();
+        
+        // Validate required fields
+        if (!this.caseData.caseName || this.caseData.caseName === 'Untitled Case') {
+            alert('Please enter a case name before submitting.');
+            return;
+        }
+        
+        if (!this.caseData.citation) {
+            alert('Please enter a citation before submitting.');
+            return;
+        }
+        
+        const submitBtn = document.querySelector('.submit-btn');
+        const originalText = submitBtn.textContent;
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Submitting...';
+        
+        try {
+            const response = await fetch('https://casebriefr-worker.zoe-270.workers.dev/api/submit-brief', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    caseName: this.caseData.caseName,
+                    citation: this.caseData.citation,
+                    court: this.caseData.court,
+                    dateDecided: this.caseData.dateDecided,
+                    briefedBy: this.caseData.briefedBy,
+                    facts: this.caseData.facts,
+                    proceduralHistory: this.caseData.proceduralHistory,
+                    issues: this.caseData.issues,
+                    holding: this.caseData.holding,
+                    rule: this.caseData.rule,
+                    reasoning: this.caseData.reasoning,
+                    concurrence: this.caseData.concurrence,
+                    dissent: this.caseData.dissent,
+                    significance: this.caseData.significance,
+                    notes: this.caseData.notes
+                })
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                alert('Brief submitted successfully! It will appear in the d-Briefs gallery shortly.');
+            } else {
+                throw new Error(result.error || 'Unknown error');
+            }
+        } catch (error) {
+            console.error('Submission error:', error);
+            alert('Failed to submit brief. Please try again later. Error: ' + error.message);
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalText;
+        }
+    }
 }
 
 // Initialize
