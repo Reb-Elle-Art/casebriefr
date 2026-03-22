@@ -85,6 +85,32 @@
         .cta-button.secondary:hover {
             background: rgba(255,255,255,0.1);
         }
+
+        .cta-button.ai-feature {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button.ai-feature::before {
+            content: "✨";
+            margin-right: 8px;
+        }
+
+        .cta-button.ai-feature:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .button-label {
+            font-size: 11px;
+            opacity: 0.7;
+            margin-top: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
         
         .features {
             margin-top: 60px;
@@ -140,8 +166,14 @@
 
         <div class="button-group">
             <a href="template-v2.html" class="cta-button">Create a Case Brief</a>
-            <a href="https://d-briefs.com" class="cta-button secondary">View Gallery</a>
+            <a href="https://dbriefr.com" class="cta-button secondary">View Gallery</a>
         </div>
+        
+        <div class="button-group">
+            <a href="auto-generate.html" class="cta-button ai-feature">✨ Auto-Generate with AI</a>
+        </div>
+        
+        <p class="button-label">AI-powered • Fetches real case law • Free</p>
         
         <div class="features">
             <div class="feature">

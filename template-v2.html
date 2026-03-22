@@ -48,6 +48,36 @@
             margin-top: 5px;
         }
         
+        .auto-generate-link {
+            margin-top: 15px;
+            text-align: center;
+        }
+        
+        .auto-generate-link a {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #2c3e50;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .auto-generate-link a:hover {
+            background: #1a252f;
+        }
+        
+        .ai-badge {
+            background: #e3f2fd;
+            color: #1565c0;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            margin-left: 8px;
+            font-weight: 600;
+        }
+        
         /* ===== FORM STYLES ===== */
         h1.screen-only {
             text-align: center;
@@ -348,6 +378,9 @@
         <div class="brand-header">
             <div class="brand-name">Casebriefr</div>
             <div class="brand-tagline">Professional Legal Case Briefing Tool</div>
+            <div class="auto-generate-link">
+                <a href="auto-generate.html">✨ Auto-Generate from Citation <span class="ai-badge">AI</span></a>
+            </div>
         </div>
         
         <h1 class="screen-only">Case Brief</h1>
@@ -585,5 +618,55 @@
     </div>
     
     <script src="js/pdf-generator.js"></script>
+    <script>
+        // Handle URL parameters for auto-generated content
+        (function() {
+            const params = new URLSearchParams(window.location.search);
+            
+            // Only proceed if we have generated content
+            if (!params.has('generated')) return;
+            
+            // Prefill form fields
+            const fields = {
+                'case-name': 'name',
+                'citation': 'citation',
+                'court': 'court',
+                'decision-date': 'decisionDate',
+                'facts': 'facts',
+                'procedural-history': 'proceduralHistory',
+            };
+            
+            for (const [elementId, paramName] of Object.entries(fields)) {
+                const value = params.get(paramName);
+                if (value) {
+                    const element = document.getElementById(elementId);
+                    if (element) {
+                        element.value = decodeURIComponent(value);
+                    }
+                }
+            }
+            
+            // Show a notification that content was auto-generated
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                background: #e3f2fd;
+                border: 1px solid #2196f3;
+                color: #1565c0;
+                padding: 15px;
+                border-radius: 4px;
+                margin-bottom: 20px;
+                font-size: 14px;
+            `;
+            notification.innerHTML = `
+                <strong>✨ AI-Generated Content Loaded</strong><br>
+                Facts and Procedural History have been auto-generated from the case opinion.
+                Please review and edit before submitting to ensure accuracy.
+            `;
+            
+            const container = document.querySelector('.container');
+            const firstSection = container.querySelector('.form-section');
+            container.insertBefore(notification, firstSection);
+        })();
+    </script>
 </body>
 </html>

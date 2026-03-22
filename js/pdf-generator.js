@@ -130,7 +130,7 @@ class CasebriefrPDF {
         }, 100);
     }
 
-    // Submit brief to d-Briefs gallery via Cloudflare Worker
+    // Submit brief to dbriefr gallery via Cloudflare Worker
     async submitToDBrief() {
         this.collectData();
         
@@ -179,9 +179,9 @@ class CasebriefrPDF {
             const result = await response.json();
             
             if (result.success) {
-                const viewInGallery = confirm('Brief submitted successfully! 🎉\n\nWould you like to view it in the d-Briefs gallery?');
+                const viewInGallery = confirm('Brief submitted successfully! 🎉\n\nWould you like to view it in the dbriefr gallery?');
                 if (viewInGallery) {
-                    window.open('https://d-briefs.com/gallery.html', '_blank');
+                    window.open('https://dbriefr.com/gallery.html', '_blank');
                 }
             } else {
                 throw new Error(result.error || 'Unknown error');

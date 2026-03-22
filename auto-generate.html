@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casebriefr - Auto-Generate Brief</title>
+    <style>
+        /* ===== BASE STYLES ===== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        
+        /* ===== BRANDING ===== */
+        .brand-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #2c3e50;
+        }
+        
+        .brand-name {
+            font-size: 32px;
+            font-weight: 700;
+            color: #2c3e50;
+            letter-spacing: 1px;
+        }
+        
+        .brand-tagline {
+            color: #666;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        
+        /* ===== PAGE TITLE ===== */
+        h1 {
+            text-align: center;
+            color: #1a1a1a;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+        
+        /* ===== FORM STYLES ===== */
+        .form-section {
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+            font-size: 14px;
+        }
+        
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            font-family: inherit;
+        }
+        
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #2c3e50;
+            box-shadow: 0 0 0 3px rgba(44, 62, 80, 0.1);
+        }
+        
+        .hint {
+            font-size: 13px;
+            color: #666;
+            margin-top: 6px;
+        }
+        
+        /* ===== BUTTONS ===== */
+        .button-row {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        button {
+            padding: 14px 32px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .primary-btn {
+            background: #2c3e50;
+            color: white;
+        }
+        
+        .primary-btn:hover:not(:disabled) {
+            background: #1a252f;
+        }
+        
+        .secondary-btn {
+            background: white;
+            color: #2c3e50;
+            border: 2px solid #2c3e50;
+        }
+        
+        .secondary-btn:hover:not(:disabled) {
+            background: #f5f5f5;
+        }
+        
+        /* ===== CASE VERIFICATION CARD ===== */
+        .verification-card {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .verification-card.visible {
+            display: block;
+        }
+        
+        .verification-card h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .case-meta {
+            margin-bottom: 15px;
+        }
+        
+        .case-meta-item {
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .case-meta-label {
+            font-weight: 600;
+            color: #555;
+        }
+        
+        .case-preview {
+            background: white;
+            border-left: 3px solid #2c3e50;
+            padding: 15px;
+            margin-top: 15px;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #444;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .verification-actions {
+            margin-top: 20px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        
+        /* ===== STATUS MESSAGES ===== */
+        .status-message {
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+            display: none;
+        }
+        
+        .status-message.visible {
+            display: block;
+        }
+        
+        .status-loading {
+            background: #e3f2fd;
+            border: 1px solid #2196f3;
+            color: #1565c0;
+        }
+        
+        .status-error {
+            background: #ffebee;
+            border: 1px solid #f44336;
+            color: #c62828;
+        }
+        
+        .status-success {
+            background: #e8f5e9;
+            border: 1px solid #4caf50;
+            color: #2e7d32;
+        }
+        
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #1565c0;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* ===== DISCLAIMER ===== */
+        .disclaimer {
+            background: #fff8e1;
+            border: 1px solid #ffc107;
+            border-radius: 4px;
+            padding: 15px;
+            margin-top: 30px;
+            font-size: 13px;
+            color: #666;
+        }
+        
+        .disclaimer strong {
+            color: #f57c00;
+        }
+        
+        /* ===== CACHE INFO ===== */
+        .cache-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #e8f5e9;
+            border: 1px solid #4caf50;
+            border-radius: 4px;
+            padding: 10px 15px;
+            margin-top: 15px;
+            font-size: 12px;
+            color: #2e7d32;
+        }
+        
+        .cache-clear-btn {
+            background: transparent;
+            border: 1px solid #4caf50;
+            color: #2e7d32;
+            padding: 4px 12px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        
+        .cache-clear-btn:hover {
+            background: #4caf50;
+            color: white;
+        }
+        
+        /* ===== FOOTER ===== */
+        .brand-footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            color: #999;
+            font-size: 13px;
+        }
+        
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .button-row {
+                flex-direction: column;
+            }
+            
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Brand Header -->
+        <div class="brand-header">
+            <div class="brand-name">Casebriefr</div>
+            <div class="brand-tagline">Intelligent Case Brief Generation</div>
+        </div>
+        
+        <h1>Auto-Generate Brief</h1>
+        <p class="subtitle">Enter a case citation to fetch and generate a draft brief</p>
+        
+        <!-- Step 1: Citation Input -->
+        <div id="step-1" class="form-section">
+            <div class="form-group">
+                <label for="citation">Case Citation</label>
+                <input 
+                    type="text" 
+                    id="citation" 
+                    placeholder="e.g., 393 Mass. 564 or 5 U.S. 137"
+                    autocomplete="off"
+                >
+                <p class="hint">Enter a properly formatted legal citation. Searches Harvard CAP (pre-2018) and CourtListener (all dates). Supports U.S., state, and federal reporters.</p>
+            </div>
+            
+            <div class="button-row">
+                <button class="primary-btn" onclick="fetchCase()" id="fetch-btn">
+                    Fetch Case
+                </button>
+            </div>
+        </div>
+        
+        <!-- Status Messages -->
+        <div id="status-message" class="status-message"></div>
+        
+        <!-- Step 2: Case Verification -->
+        <div id="step-2" class="verification-card">
+            <h3>Verify Case Information</h3>
+            
+            <div class="case-meta">
+                <div class="case-meta-item">
+                    <span class="case-meta-label">Case Name:</span>
+                    <span id="verify-name"></span>
+                </div>
+                <div class="case-meta-item">
+                    <span class="case-meta-label">Citation:</span>
+                    <span id="verify-citation"></span>
+                </div>
+                <div class="case-meta-item">
+                    <span class="case-meta-label">Court:</span>
+                    <span id="verify-court"></span>
+                </div>
+                <div class="case-meta-item">
+                    <span class="case-meta-label">Decision Date:</span>
+                    <span id="verify-date"></span>
+                </div>
+                <div class="case-meta-item" id="verify-judge-row" style="display: none;">
+                    <span class="case-meta-label">Judge:</span>
+                    <span id="verify-judge"></span>
+                </div>
+            </div>
+            
+            <div class="case-preview" id="case-preview"></div>
+            
+            <div class="verification-actions">
+                <button class="secondary-btn" onclick="resetForm()">
+                    Try Different Citation
+                </button>
+                <button class="primary-btn" onclick="generateBrief()" id="generate-btn">
+                    Generate Brief
+                </button>
+            </div>
+        </div>
+        
+        <!-- Disclaimer -->
+        <div class="disclaimer">
+            <strong>⚠️ AI-Generated Content</strong><br>
+            This feature uses Claude AI to generate draft brief sections. 
+            Generated content should be reviewed for accuracy and completeness. 
+            Always verify facts and legal analysis against the original opinion.
+        </div>
+        
+        <!-- Cache Info -->
+        <div class="cache-info" id="cache-info">
+            <span id="cache-stats">Checking cache...</span>
+            <button onclick="clearCachesUI()" class="cache-clear-btn">Clear Cache</button>
+        </div>
+        
+        <div class="brand-footer">
+            Created with Casebriefr — casebriefr.com
+        </div>
+    </div>
+    
+    <script>
+        // Worker API endpoint
+        const WORKER_URL = 'https://casebriefr-worker.zoe-270.workers.dev';
+        
+        // Store case data for generation step
+        let currentCaseData = null;
+        let currentSource = null;
+        
+        // Cache configuration
+        const CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
+        const CACHE_KEY_CASES = 'casebriefr_case_cache';
+        const CACHE_KEY_BRIEFS = 'casebriefr_brief_cache';
+        
+        /**
+         * Get cached data if not expired
+         */
+        function getCache(key) {
+            try {
+                const cache = JSON.parse(localStorage.getItem(key) || '{}');
+                const now = Date.now();
+                // Filter out expired entries
+                const valid = {};
+                for (const [k, v] of Object.entries(cache)) {
+                    if (v.expires > now) {
+                        valid[k] = v.data;
+                    }
+                }
+                return valid;
+            } catch (e) {
+                return {};
+            }
+        }
+        
+        /**
+         * Save data to cache with TTL
+         */
+        function setCache(key, dataKey, data) {
+            try {
+                const cache = JSON.parse(localStorage.getItem(key) || '{}');
+                cache[dataKey] = {
+                    data: data,
+                    expires: Date.now() + CACHE_TTL_MS
+                };
+                localStorage.setItem(key, JSON.stringify(cache));
+            } catch (e) {
+                console.warn('Cache save failed:', e);
+            }
+        }
+        
+        /**
+         * Clear all caches
+         */
+        function clearCaches() {
+            localStorage.removeItem(CACHE_KEY_CASES);
+            localStorage.removeItem(CACHE_KEY_BRIEFS);
+        }
+        
+        /**
+         * Normalize citation for cache key
+         */
+        function normalizeCitation(citation) {
+            return citation.toLowerCase().replace(/\s+/g, ' ').trim();
+        }
+        
+        /**
+         * Show status message
+         */
+        function showStatus(message, type = 'loading') {
+            const statusEl = document.getElementById('status-message');
+            statusEl.className = 'status-message status-' + type + ' visible';
+            
+            if (type === 'loading') {
+                statusEl.innerHTML = '<span class="spinner"></span>' + message;
+            } else {
+                statusEl.textContent = message;
+            }
+        }
+        
+        /**
+         * Hide status message
+         */
+        function hideStatus() {
+            document.getElementById('status-message').classList.remove('visible');
+        }
+        
+        /**
+         * Fetch case from cache, CAP, or CourtListener
+         */
+        async function fetchCase() {
+            const citation = document.getElementById('citation').value.trim();
+            
+            if (!citation) {
+                showStatus('Please enter a case citation', 'error');
+                return;
+            }
+            
+            const cacheKey = normalizeCitation(citation);
+            const caseCache = getCache(CACHE_KEY_CASES);
+            
+            // Check cache first
+            if (caseCache[cacheKey]) {
+                const cached = caseCache[cacheKey];
+                currentSource = cached.source + ' (cached)';
+                currentCaseData = cached.caseData;
+                displayCaseData(cached.caseData);
+                document.getElementById('step-2').classList.add('visible');
+                showStatus('Loaded from cache', 'success');
+                setTimeout(hideStatus, 2000);
+                return;
+            }
+            
+            showStatus('Fetching case from Caselaw Access Project...');
+            document.getElementById('fetch-btn').disabled = true;
+            
+            try {
+                // Try CAP first
+                const capResponse = await fetch(`${WORKER_URL}/api/fetch-case?citation=${encodeURIComponent(citation)}`);
+                
+                if (capResponse.ok) {
+                    const data = await capResponse.json();
+                    if (data.success) {
+                        currentSource = 'CAP';
+                        currentCaseData = data.case;
+                        
+                        // Save to cache
+                        setCache(CACHE_KEY_CASES, cacheKey, {
+                            source: 'CAP',
+                            caseData: data.case,
+                            citation: citation
+                        });
+                        
+                        displayCaseData(data.case);
+                        hideStatus();
+                        document.getElementById('step-2').classList.add('visible');
+                        return;
+                    }
+                }
+                
+                // CAP failed or case not found - try CourtListener fallback
+                showStatus('Not found in CAP. Checking CourtListener (recent cases)...');
+                
+                const clResponse = await fetch(`${WORKER_URL}/api/courtlistener-lookup`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ citation }),
+                });
+                
+                const clData = await clResponse.json();
+                
+                if (!clResponse.ok || !clData.success) {
+                    throw new Error(clData.error || 'Case not found in any database');
+                }
+                
+                // CourtListener success
+                currentSource = 'CourtListener';
+                currentCaseData = clData.case;
+                
+                // Save to cache
+                setCache(CACHE_KEY_CASES, cacheKey, {
+                    source: 'CourtListener',
+                    caseData: clData.case,
+                    citation: citation
+                });
+                
+                displayCaseData(clData.case);
+                hideStatus();
+                document.getElementById('step-2').classList.add('visible');
+                
+            } catch (error) {
+                console.error('Fetch error:', error);
+                showStatus('Error: ' + error.message, 'error');
+            } finally {
+                document.getElementById('fetch-btn').disabled = false;
+            }
+        }
+        
+        /**
+         * Display case data in the verification card
+         */
+        function displayCaseData(caseData) {
+            document.getElementById('verify-name').textContent = caseData.name || 'Unknown';
+            document.getElementById('verify-citation').textContent = caseData.citation || document.getElementById('citation').value.trim();
+            document.getElementById('verify-court').textContent = caseData.court || 'Unknown';
+            document.getElementById('verify-date').textContent = caseData.decisionDate || 'Unknown';
+            
+            if (caseData.judge) {
+                document.getElementById('verify-judge').textContent = caseData.judge;
+                document.getElementById('verify-judge-row').style.display = 'block';
+            } else {
+                document.getElementById('verify-judge-row').style.display = 'none';
+            }
+            
+            // Show source badge in preview
+            let previewText = caseData.preview || 'No preview available';
+            if (currentSource) {
+                previewText = `[Source: ${currentSource}]\n\n` + previewText;
+            }
+            document.getElementById('case-preview').textContent = previewText;
+        }
+        
+        /**
+         * Generate brief using Claude (with caching)
+         */
+        async function generateBrief() {
+            if (!currentCaseData || !currentCaseData.content) {
+                showStatus('No case content available for generation', 'error');
+                return;
+            }
+            
+            // Check brief cache first
+            const briefCacheKey = normalizeCitation(currentCaseData.citation || currentCaseData.name);
+            const briefCache = getCache(CACHE_KEY_BRIEFS);
+            
+            if (briefCache[briefCacheKey]) {
+                const cachedBrief = briefCache[briefCacheKey];
+                showStatus('Using cached brief generation', 'success');
+                
+                // Build URL with cached data
+                const params = new URLSearchParams({
+                    name: currentCaseData.name || '',
+                    citation: currentCaseData.citation || '',
+                    court: currentCaseData.court || '',
+                    decisionDate: currentCaseData.decisionDate || '',
+                    facts: cachedBrief.facts || '',
+                    proceduralHistory: cachedBrief.proceduralHistory || '',
+                    generated: 'true',
+                    cached: 'true',
+                });
+                
+                window.location.href = 'template-v2.html?' + params.toString();
+                return;
+            }
+            
+            showStatus('Generating brief with AI. This may take 10-30 seconds...');
+            document.getElementById('generate-btn').disabled = true;
+            
+            try {
+                // Normalize content format based on source
+                let caseContent = currentCaseData.content;
+                
+                // CourtListener returns plain text directly
+                // CAP returns structured object with opinions array
+                if (currentSource === 'CAP' && typeof caseContent === 'object') {
+                    // CAP format - will be handled by worker's extractCaseText
+                    // Pass as-is
+                }
+                // CourtListener format - already plain text
+                
+                const response = await fetch(`${WORKER_URL}/api/generate-brief`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        caseContent: caseContent,
+                        caseName: currentCaseData.name,
+                        citation: currentCaseData.citation,
+                    }),
+                });
+                
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(data.error || 'Failed to generate brief');
+                }
+                
+                // Cache the generation result
+                setCache(CACHE_KEY_BRIEFS, briefCacheKey, {
+                    facts: data.data.facts,
+                    proceduralHistory: data.data.proceduralHistory,
+                    generatedAt: new Date().toISOString()
+                });
+                
+                // Build URL with prefilled data for template-v2.html
+                const params = new URLSearchParams({
+                    name: currentCaseData.name || '',
+                    citation: currentCaseData.citation || '',
+                    court: currentCaseData.court || '',
+                    decisionDate: currentCaseData.decisionDate || '',
+                    facts: data.data.facts || '',
+                    proceduralHistory: data.data.proceduralHistory || '',
+                    generated: 'true',
+                });
+                
+                // Redirect to template with prefilled data
+                window.location.href = 'template-v2.html?' + params.toString();
+                
+            } catch (error) {
+                console.error('Generation error:', error);
+                showStatus('Error: ' + error.message, 'error');
+                document.getElementById('generate-btn').disabled = false;
+            }
+        }
+        
+        /**
+         * Reset form to try different citation
+         */
+        function resetForm() {
+            document.getElementById('step-2').classList.remove('visible');
+            document.getElementById('citation').value = '';
+            document.getElementById('citation').focus();
+            currentCaseData = null;
+            currentSource = null;
+            hideStatus();
+        }
+        
+        /**
+         * Update cache stats display
+         */
+        function updateCacheStats() {
+            const caseCache = getCache(CACHE_KEY_CASES);
+            const briefCache = getCache(CACHE_KEY_BRIEFS);
+            const caseCount = Object.keys(caseCache).length;
+            const briefCount = Object.keys(briefCache).length;
+            
+            const statsEl = document.getElementById('cache-stats');
+            if (caseCount === 0 && briefCount === 0) {
+                statsEl.textContent = 'Cache empty';
+            } else {
+                statsEl.textContent = `Cached: ${caseCount} case${caseCount !== 1 ? 's' : ''}, ${briefCount} brief${briefCount !== 1 ? 's' : ''}`;
+            }
+        }
+        
+        /**
+         * Clear caches and update UI
+         */
+        function clearCachesUI() {
+            clearCaches();
+            updateCacheStats();
+            showStatus('Cache cleared', 'success');
+            setTimeout(hideStatus, 2000);
+        }
+        
+        // Initialize cache stats on load
+        updateCacheStats();
+        
+        // Allow Enter key to submit
+        document.getElementById('citation').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                fetchCase();
+            }
+        });
+    </script>
+</body>
+</html>

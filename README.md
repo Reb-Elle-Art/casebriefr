@@ -23,7 +23,7 @@ Casebriefr is a clean, printable HTML template for creating structured legal cas
 - ✅ **Structured Sections** — All essential case brief components (Facts, Issues, Holding, Rule, Reasoning, etc.)
 - ✅ **Print-Optimized** — Clean formatting that looks great on paper or as PDF
 - ✅ **Fillable Fields** — Type directly in your browser, then print or save as PDF
-- ✅ **Submit to Gallery** — Share your briefs to d-Briefs with one click
+- ✅ **Submit to Gallery** — Share your briefs to dbriefr with one click
 - ✅ **Professional Design** — Clean, readable layout suitable for class or court
 
 ## Files
@@ -38,7 +38,7 @@ Casebriefr is a clean, printable HTML template for creating structured legal cas
 
 ## Related Projects
 
-- **d-Briefs Gallery:** https://d-briefs.com — Showcase for shared briefs
+- **dbriefr Gallery:** https://dbriefr.com — Showcase for shared briefs
 - **Planning:** `p-casebriefr-planning/` — Development documentation
 
 ---
