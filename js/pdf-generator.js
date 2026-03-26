@@ -9,6 +9,10 @@ class CasebriefrPDF {
 
     // Collect all form data
     collectData() {
+        // Check URL params for generated flag
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlGenerated = urlParams.get('generated');
+        
         this.caseData = {
             caseName: document.getElementById('case-name')?.value || 'Untitled Case',
             citation: document.getElementById('citation')?.value || '',
@@ -16,6 +20,7 @@ class CasebriefrPDF {
             dateDecided: document.getElementById('date')?.value || '',
             judge: document.getElementById('judge')?.value || '',
             briefedBy: document.getElementById('briefed-by')?.value || '',
+            generated: urlGenerated === 'true',
             facts: document.getElementById('facts')?.value || '',
             proceduralHistory: document.getElementById('procedural-history')?.value || '',
             issues: document.getElementById('issues')?.value || '',
@@ -70,6 +75,12 @@ class CasebriefrPDF {
         }
         if (printBriefedBy) {
             printBriefedBy.textContent = this.caseData.briefedBy ? `Briefed by: ${this.caseData.briefedBy}` : '';
+        }
+        
+        // AI disclaimer
+        const printDisclaimer = document.getElementById('print-disclaimer');
+        if (printDisclaimer && this.caseData.generated) {
+            printDisclaimer.textContent = 'Generated with the assistance of AI';
         }
         
         // Update all print content divs
