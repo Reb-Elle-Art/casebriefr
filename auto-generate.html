@@ -625,8 +625,8 @@
                 const cachedBrief = briefCache[briefCacheKey];
                 showStatus('Using cached brief generation', 'success');
                 
-                // Build URL with cached data
-                const params = new URLSearchParams({
+                // Store in localStorage to avoid URL length limits
+                const briefData = {
                     name: currentCaseData.name || '',
                     citation: currentCaseData.citation || '',
                     court: currentCaseData.court || '',
@@ -637,11 +637,15 @@
                     issue: cachedBrief.issue || '',
                     holding: cachedBrief.holding || '',
                     reasoning: cachedBrief.reasoning || '',
+                    ruleOfLaw: cachedBrief.ruleOfLaw || '',
                     generated: 'true',
                     cached: 'true',
-                });
+                };
+                localStorage.setItem('generatedBrief', JSON.stringify(briefData));
                 
-                window.location.href = 'template-v2.html?' + params.toString();
+                // Redirect to template (will read from localStorage)
+                await new Promise(r => setTimeout(r, 100));
+                window.location.href = 'template-v2.html';
                 return;
             }
             
@@ -688,8 +692,8 @@
                     generatedAt: new Date().toISOString()
                 });
                 
-                // Build URL with prefilled data for template-v2.html
-                const params = new URLSearchParams({
+                // Store in localStorage to avoid URL length limits
+                const briefData = {
                     name: currentCaseData.name || '',
                     citation: currentCaseData.citation || '',
                     court: currentCaseData.court || '',
@@ -700,13 +704,16 @@
                     issue: data.data.issue || '',
                     holding: data.data.holding || '',
                     reasoning: data.data.reasoning || '',
+                    ruleOfLaw: data.data.ruleOfLaw || '',
                     generated: 'true',
                     truncated: data.context?.truncated ? 'true' : 'false',
                     originalLength: data.context?.originalLength || 0,
-                });
+                };
+                localStorage.setItem('generatedBrief', JSON.stringify(briefData));
                 
-                // Redirect to template with prefilled data
-                window.location.href = 'template-v2.html?' + params.toString();
+                // Redirect to template (will read from localStorage)
+                await new Promise(r => setTimeout(r, 100));
+                window.location.href = 'template-v2.html';
                 
             } catch (error) {
                 console.error('Generation error:', error);
