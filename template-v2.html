@@ -335,6 +335,7 @@
             
             /* Hide all screen-only elements */
             .brand-header,
+            .ai-notification,
             .button-row, 
             .brand-footer, 
             .screen-only,
@@ -658,6 +659,7 @@
             
             // Show a notification that content was auto-generated
             const notification = document.createElement('div');
+            notification.className = 'ai-notification';
             notification.style.cssText = `
                 background: #e3f2fd;
                 border: 1px solid #2196f3;
