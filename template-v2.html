@@ -666,6 +666,27 @@
             const container = document.querySelector('.container');
             const firstSection = container.querySelector('.form-section');
             container.insertBefore(notification, firstSection);
+            
+            // Check for truncation notice
+            if (params.get('truncated') === 'true') {
+                const truncationWarning = document.createElement('div');
+                truncationWarning.style.cssText = `
+                    background: #fff3e0;
+                    border: 1px solid #ff9800;
+                    color: #e65100;
+                    padding: 15px;
+                    border-radius: 4px;
+                    margin-bottom: 20px;
+                    font-size: 14px;
+                `;
+                const originalLen = parseInt(params.get('originalLength') || '0');
+                truncationWarning.innerHTML = `
+                    <strong>⚠️ Case Content Truncated</strong><br>
+                    The original case opinion exceeded the AI's context window (${originalLen.toLocaleString()} characters).
+                    The Facts and Procedural History may be incomplete. Please verify against the full opinion.
+                `;
+                container.insertBefore(truncationWarning, firstSection);
+            }
         })();
     </script>
 </body>

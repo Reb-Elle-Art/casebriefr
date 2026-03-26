@@ -690,6 +690,8 @@
                     facts: data.data.facts || '',
                     proceduralHistory: data.data.proceduralHistory || '',
                     generated: 'true',
+                    truncated: data.context?.truncated ? 'true' : 'false',
+                    originalLength: data.context?.originalLength || 0,
                 });
                 
                 // Redirect to template with prefilled data
