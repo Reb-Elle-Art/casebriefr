@@ -629,14 +629,37 @@
     
     <script src="js/pdf-generator.js"></script>
     <script>
-        // Handle URL parameters for auto-generated content
+        // Handle auto-generated content from localStorage (new) or URL params (legacy)
         (function() {
-            const params = new URLSearchParams(window.location.search);
+            let generatedData = null;
             
-            // Only proceed if we have generated content
-            if (!params.has('generated')) return;
+            // Try localStorage first (new flow from auto-generate.html)
+            try {
+                const stored = localStorage.getItem('generatedBrief');
+                if (stored) {
+                    generatedData = JSON.parse(stored);
+                    console.log('Loaded brief from localStorage');
+                }
+            } catch (e) {
+                console.warn('Error reading localStorage:', e);
+            }
             
-            // Prefill form fields
+            // Fall back to URL params (legacy flow)
+            if (!generatedData) {
+                const params = new URLSearchParams(window.location.search);
+                if (!params.has('generated')) return;
+                
+                // Convert URL params to object for unified handling
+                generatedData = {};
+                for (const [key, value] of params) {
+                    generatedData[key] = value;
+                }
+            } else {
+                // Only proceed if generated flag is set
+                if (!generatedData.generated) return;
+            }
+            
+            // Prefill form fields (localStorage keys -> form element IDs)
             const fields = {
                 'case-name': 'name',
                 'citation': 'citation',
@@ -647,11 +670,12 @@
                 'procedural-history': 'proceduralHistory',
                 'issues': 'issue',
                 'holding': 'holding',
+                'rule': 'ruleOfLaw',  // Map ruleOfLaw to rule field
                 'reasoning': 'reasoning',
             };
             
-            for (const [elementId, paramName] of Object.entries(fields)) {
-                const value = params.get(paramName);
+            for (const [elementId, dataKey] of Object.entries(fields)) {
+                const value = generatedData[dataKey];
                 if (value) {
                     const element = document.getElementById(elementId);
                     if (element) {
@@ -683,7 +707,7 @@
             container.insertBefore(notification, firstSection);
             
             // Check for truncation notice
-            if (params.get('truncated') === 'true') {
+            if (generatedData.truncated === 'true') {
                 const truncationWarning = document.createElement('div');
                 truncationWarning.style.cssText = `
                     background: #fff3e0;
@@ -694,13 +718,20 @@
                     margin-bottom: 20px;
                     font-size: 14px;
                 `;
-                const originalLen = parseInt(params.get('originalLength') || '0');
+                const originalLen = parseInt(generatedData.originalLength || '0');
                 truncationWarning.innerHTML = `
                     <strong>⚠️ Case Content Truncated</strong><br>
                     The original case opinion exceeded the AI's context window (${originalLen.toLocaleString()} characters).
                     The Facts and Procedural History may be incomplete. Please verify against the full opinion.
                 `;
                 container.insertBefore(truncationWarning, firstSection);
+            }
+            
+            // Clean up localStorage after loading
+            try {
+                localStorage.removeItem('generatedBrief');
+            } catch (e) {
+                // Ignore cleanup errors
             }
         })();
     </script>
