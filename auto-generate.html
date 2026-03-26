@@ -634,6 +634,9 @@
                     judge: currentCaseData.judge || '',
                     facts: cachedBrief.facts || '',
                     proceduralHistory: cachedBrief.proceduralHistory || '',
+                    issue: cachedBrief.issue || '',
+                    holding: cachedBrief.holding || '',
+                    reasoning: cachedBrief.reasoning || '',
                     generated: 'true',
                     cached: 'true',
                 });
@@ -679,6 +682,9 @@
                 setCache(CACHE_KEY_BRIEFS, briefCacheKey, {
                     facts: data.data.facts,
                     proceduralHistory: data.data.proceduralHistory,
+                    issue: data.data.issue,
+                    holding: data.data.holding,
+                    reasoning: data.data.reasoning,
                     generatedAt: new Date().toISOString()
                 });
                 
@@ -691,6 +697,9 @@
                     judge: currentCaseData.judge || '',
                     facts: data.data.facts || '',
                     proceduralHistory: data.data.proceduralHistory || '',
+                    issue: data.data.issue || '',
+                    holding: data.data.holding || '',
+                    reasoning: data.data.reasoning || '',
                     generated: 'true',
                     truncated: data.context?.truncated ? 'true' : 'false',
                     originalLength: data.context?.originalLength || 0,
