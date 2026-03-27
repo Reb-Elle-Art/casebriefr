@@ -688,7 +688,7 @@
                     proceduralHistory: data.data.proceduralHistory,
                     issue: data.data.issue,
                     holding: data.data.holding,
-                    reasoning: data.data.reasoning,
+                    ruleOfLaw: data.data.ruleOfLaw,
                     generatedAt: new Date().toISOString()
                 });
                 
@@ -703,7 +703,6 @@
                     proceduralHistory: data.data.proceduralHistory || '',
                     issue: data.data.issue || '',
                     holding: data.data.holding || '',
-                    reasoning: data.data.reasoning || '',
                     ruleOfLaw: data.data.ruleOfLaw || '',
                     generated: 'true',
                     truncated: data.context?.truncated ? 'true' : 'false',
